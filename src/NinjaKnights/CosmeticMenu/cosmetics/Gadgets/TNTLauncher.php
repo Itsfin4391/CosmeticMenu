@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace NinjaKnights\CosmeticMenu\cosmetics\Gadgets;
 
@@ -13,23 +13,19 @@ use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\ListTag;
 
-class TNTLauncher implements Listener
-{
+class TNTLauncher implements Listener {
 
     private $plugin;
 
-    public function __construct(CosmeticMenu $plugin)
-    {
+    public function __construct(CosmeticMenu $plugin) {
         $this->plugin = $plugin;
     }
 
-    public function ExplosionPrimeEvent(ExplosionPrimeEvent $event)
-    {
+    public function ExplosionPrimeEvent(ExplosionPrimeEvent $event) {
         $event->setBlockBreaking(false);
     }
 
-    public function onInteract(PlayerInteractEvent $event)
-    {
+    public function onInteract(PlayerInteractEvent $event) {
         $player = $event->getPlayer();
         $item = $event->getItem();
         $name = $player->getName();
@@ -37,25 +33,21 @@ class TNTLauncher implements Listener
         $block = $player->getLevel()->getBlock($player->floor()->subtract(0, 1));
 
         //TNT-Launcher
-        if($iname == "TNT-Launcher"){
+        if($iname == "TNT-Launcher") {
             if($player->hasPermission("cosmetic.gadgets.tntlauncher")) {
-                if (!isset($this->plugin->tntCooldown[$player->getName()])) {
+                if(!isset($this->plugin->tntCooldown[$player->getName()])) {
                     $nbt = new CompoundTag("", [
                         "Pos" => new ListTag("Pos", [
                             new DoubleTag("", $player->x),
                             new DoubleTag("", $player->y + $player->getEyeHeight()),
-                            new DoubleTag("", $player->z)
-                        ]),
+                            new DoubleTag("", $player->z)]),
                         "Motion" => new ListTag("Motion", [
                             new DoubleTag("", -sin($player->yaw / 180 * M_PI) * cos($player->pitch / 180 * M_PI)),
                             new DoubleTag("", -sin($player->pitch / 180 * M_PI)),
-                            new DoubleTag("", cos($player->yaw / 180 * M_PI) * cos($player->pitch / 180 * M_PI))
-                        ]),
+                            new DoubleTag("", cos($player->yaw / 180 * M_PI) * cos($player->pitch / 180 * M_PI))]),
                         "Rotation" => new ListTag("Rotation", [
                             new FloatTag("", $player->yaw),
-                            new FloatTag("", $player->pitch)
-                        ]),
-                    ]);
+                            new FloatTag("", $player->pitch)]),]);
                     $tnt = Entity::createEntity("PrimedTNT", $player->getLevel(), $nbt, null);
                     $tnt->setMotion($tnt->getMotion()->multiply(2));
                     $tnt->spawnTo($player);
@@ -71,8 +63,7 @@ class TNTLauncher implements Listener
         }
     }
 
-    function getPlugin(): CosmeticMenu
-    {
+    function getPlugin(): CosmeticMenu {
         return $this->plugin;
     }
 

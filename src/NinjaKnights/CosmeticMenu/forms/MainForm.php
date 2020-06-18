@@ -1,58 +1,55 @@
-<?php 
+<?php
 
 namespace NinjaKnights\CosmeticMenu\forms;
-    
+
 use jojoe77777\FormAPI\SimpleForm;
 use NinjaKnights\CosmeticMenu\CosmeticMenu;
 use pocketmine\Player;
 
-class MainForm
-{
+class MainForm {
 
     private $plugin;
 
-    public function __construct(CosmeticMenu $plugin)
-    {
+    public function __construct(CosmeticMenu $plugin) {
         $this->plugin = $plugin;
     }
 
-    public function menuForm($player)
-    {
-        $form = new SimpleForm(function (Player $player, $data) {
+    public function menuForm($player) {
+        $form = new SimpleForm(function(Player $player, $data) {
             $result = $data;
-            if ($result === null) {
+            if($result === null) {
                 return true;
             }
-            switch ($result) {
+            switch($result) {
                 case 0:
-                    if($player->hasPermission("cosmetic.gadgets")){
+                    if($player->hasPermission("cosmetic.gadgets")) {
                         $this->getMain()->getGadgets()->openGadgets($player);
-                    } 
-                break;
+                    }
+                    break;
 
                 case 1:
-                    if($player->hasPermission("cosmetic.particles")){
+                    if($player->hasPermission("cosmetic.particles")) {
                         $this->getMain()->getParticles()->openParticles($player);
                     }
-                break;
+                    break;
 
                 case 2:
-                    if($player->hasPermission("cosmetic.suits")){
+                    if($player->hasPermission("cosmetic.suits")) {
                         $this->getMain()->getSuits()->openSuits($player);
                     }
-                break;
+                    break;
 
                 case 3:
-                    if($player->hasPermission("cosmetic.trails")){
+                    if($player->hasPermission("cosmetic.trails")) {
                         $this->getMain()->getTrails()->openTrails($player);
                     }
-                break;
+                    break;
 
                 case 4:
-                    if($player->hasPermission("cosmetic.morphs")){
+                    if($player->hasPermission("cosmetic.morphs")) {
                         $this->getMain()->getMorphs()->openMorphs($player);
                     }
-                break;
+                    break;
             }
         });
 
@@ -65,8 +62,7 @@ class MainForm
         $form->sendToPlayer($player);
     }
 
-    function getMain(): CosmeticMenu
-    {
+    function getMain(): CosmeticMenu {
         return $this->plugin;
     }
 

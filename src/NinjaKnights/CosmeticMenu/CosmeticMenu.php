@@ -31,10 +31,31 @@ use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 
-class CosmeticMenu extends PluginBase implements Listener
-{
+class CosmeticMenu extends PluginBase implements Listener {
 
     public $world;
+    public $tntCooldown = [];
+    public $tntCooldownTime = [];
+    public $lsCooldownTime = [];
+    public $lsCooldown = [];
+    public $lCooldown = [];
+    public $lCooldownTime = [];
+    public $particle1 = ["Rain Cloud"];
+    public $particle2 = ["Flame Rings"];
+    public $particle3 = ["Blizzard Aura"];
+    public $particle4 = ["Cupid's Love"];
+    public $particle5 = ["Bullet Helix"];
+    public $particle6 = ["Conduit Halo"];
+    public $particle7 = ["Witch Curse"];
+    public $particle8 = ["Blood Helix"];
+    public $particle9 = ["Emerald Twril"];
+    public $particle10 = ["Test"];
+    public $trail1 = ["Flame Trail"];
+    public $trail2 = ["Snow Trail"];
+    public $trail3 = ["Heart Trail"];
+    public $trail4 = ["Smoke Trail "];
+    public $suit1 = ["Suit"];
+    public $suit2 = ["Suit"];
     /**
      * @var Forms
      */
@@ -43,34 +64,7 @@ class CosmeticMenu extends PluginBase implements Listener
     private $particles;
     private $morphs;
     private $trails;
-	private $suits;
-
-	public $tntCooldown = [ ];
-	public $tntCooldownTime = [ ];
-	public $lsCooldownTime = [ ];
-	public $lsCooldown = [ ];
-	public $lCooldown = [ ];
-	public $lCooldownTime = [ ];
-
-	public $particle1 = array("Rain Cloud");
-	public $particle2 = array("Flame Rings");
-	public $particle3 = array("Blizzard Aura");
-    public $particle4 = array("Cupid's Love");
-    public $particle5 = array("Bullet Helix");
-    public $particle6 = array("Conduit Halo");
-    public $particle7 = array("Witch Curse");
-    public $particle8 = array("Blood Helix");
-    public $particle9 = array("Emerald Twril");
-    public $particle10 = array("Test");
-
-    public $trail1 = array("Flame Trail");
-    public $trail2 = array("Snow Trail");
-    public $trail3 = array("Heart Trail");
-    public $trail4 = array("Smoke Trail ");
-
-    public $suit1 = array("Suit");
-    public $suit2 = array("Suit");
-
+    private $suits;
     /** @var Config */
     private $config;
     /**
@@ -102,8 +96,7 @@ class CosmeticMenu extends PluginBase implements Listener
      */
     private $cosmeticCommandSupport;
 
-    public function onEnable()
-    {
+    public function onEnable() {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
         $this->getServer()->getPluginManager()->registerEvents(new GadgetsEvents($this), $this);
@@ -112,73 +105,73 @@ class CosmeticMenu extends PluginBase implements Listener
         $this->getScheduler()->scheduleRepeatingTask(new BloodHelix($this), 3);
         $this->getScheduler()->scheduleRepeatingTask(new BulletHelix($this), 3);
         $this->getScheduler()->scheduleRepeatingTask(new ConduitHalo($this), 3);
-		$this->getScheduler()->scheduleRepeatingTask(new CupidsLove($this), 3);
-		$this->getScheduler()->scheduleRepeatingTask(new EmeraldTwirl($this), 3);
-		$this->getScheduler()->scheduleRepeatingTask(new FlameRings($this), 3);
-		$this->getScheduler()->scheduleRepeatingTask(new RainCloud($this), 3);
-		$this->getScheduler()->scheduleRepeatingTask(new WitchCurse($this), 3);
+        $this->getScheduler()->scheduleRepeatingTask(new CupidsLove($this), 3);
+        $this->getScheduler()->scheduleRepeatingTask(new EmeraldTwirl($this), 3);
+        $this->getScheduler()->scheduleRepeatingTask(new FlameRings($this), 3);
+        $this->getScheduler()->scheduleRepeatingTask(new RainCloud($this), 3);
+        $this->getScheduler()->scheduleRepeatingTask(new WitchCurse($this), 3);
 
-		$this->getScheduler()->scheduleRepeatingTask(new Flames($this), 3);
-		$this->getScheduler()->scheduleRepeatingTask(new Snow($this), 3);
-		$this->getScheduler()->scheduleRepeatingTask(new Heart($this), 3);
-		$this->getScheduler()->scheduleRepeatingTask(new Smoke($this), 3);
+        $this->getScheduler()->scheduleRepeatingTask(new Flames($this), 3);
+        $this->getScheduler()->scheduleRepeatingTask(new Snow($this), 3);
+        $this->getScheduler()->scheduleRepeatingTask(new Heart($this), 3);
+        $this->getScheduler()->scheduleRepeatingTask(new Smoke($this), 3);
 
-		$this->getScheduler()->scheduleRepeatingTask(new Cooldown($this), 20);
+        $this->getScheduler()->scheduleRepeatingTask(new Cooldown($this), 20);
 
-		$this->getScheduler()->scheduleRepeatingTask(new Youtube($this), 3);
-		$this->getScheduler()->scheduleRepeatingTask(new Frog($this), 3);
+        $this->getScheduler()->scheduleRepeatingTask(new Youtube($this), 3);
+        $this->getScheduler()->scheduleRepeatingTask(new Frog($this), 3);
 
-		$this->loadPlugins();
-		$this->loadFormClass();
-		
-		$configPath = $this->getDataFolder()."config.yml";
+        $this->loadPlugins();
+        $this->loadFormClass();
+
+        $configPath = $this->getDataFolder() . "config.yml";
         $this->saveDefaultConfig();
-		$this->config = new Config($configPath, Config::YAML);
-		$this->config->getAll();
+        $this->config = new Config($configPath, Config::YAML);
+        $this->config->getAll();
         $version = $this->config->get("Version");
         $this->pluginVersion = $this->getDescription()->getVersion();
-        if($version < "2.1"){
-            $this->getLogger()->warning("You have updated CosmeticMenu to v".$this->pluginVersion." but have a config from v$version! Please delete your old config for new features to be enabled and to prevent unwanted errors!");
+        if($version < "2.1") {
+            $this->getLogger()->warning("You have updated CosmeticMenu to v" . $this->pluginVersion . " but have a config from v$version! Please delete your old config for new features to be enabled and to prevent unwanted errors!");
             $this->getServer()->getPluginManager()->disablePlugin($this);
         }
 
-		if($this->config->getNested("Cosmetic.Enabled")){
-			$this->cosmeticItemSupport = true;
-			$this->cosmeticName = (str_replace("&", "§", $this->config->getNested("Cosmetic.Name")));
+        if($this->config->getNested("Cosmetic.Enabled")) {
+            $this->cosmeticItemSupport = true;
+            $this->cosmeticName = (str_replace("&", "§", $this->config->getNested("Cosmetic.Name")));
             $this->cosmeticDes = [str_replace("&", "§", $this->config->getNested("Cosmetic.Des"))];
-			$this->cosmeticItemType = $this->config->getNested("Cosmetic.Item");
+            $this->cosmeticItemType = $this->config->getNested("Cosmetic.Item");
             $this->cosmeticForceSlot = $this->config->getNested("Cosmetic.Force-Slot");
-        } else{
+        } else {
             $this->cosmeticItemSupport = false;
             $this->getLogger()->info("The Cosmetic Item is disabled in the config.");
         }
 
-		if($this->config->getNested("Command")){
-			$this->cosmeticCommandSupport = true;
-		} else {
-			$this->cosmeticCommandSupport = false;
+        if($this->config->getNested("Command")) {
+            $this->cosmeticCommandSupport = true;
+        } else {
+            $this->cosmeticCommandSupport = false;
             $this->getLogger()->info("The Cosmetic Command is disabled in the config.");
-		}
-	}
-
-	private function loadFormClass() : void {
-		$this->forms = new MainForm($this);
-		$this->gadgets = new GadgetForm($this);
-		$this->particles = new ParticleForm($this);
-		$this->morphs = new MorphForm($this);
-		$this->trails = new TrailForm($this);
-		$this->suits = new SuitForm($this);
+        }
     }
-	
-	private function loadPlugins() : void {
 
-	}
+    private function loadPlugins(): void {
 
-	public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args) : bool {
+    }
+
+    private function loadFormClass(): void {
+        $this->forms = new MainForm($this);
+        $this->gadgets = new GadgetForm($this);
+        $this->particles = new ParticleForm($this);
+        $this->morphs = new MorphForm($this);
+        $this->trails = new TrailForm($this);
+        $this->suits = new SuitForm($this);
+    }
+
+    public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args): bool {
         switch($cmd->getName()) {
-			case "cosmetics":
-				if($sender->hasPermission("cosmetic.cmd")){
-					if($this->cosmeticCommandSupport){
+            case "cosmetics":
+                if($sender->hasPermission("cosmetic.cmd")) {
+                    if($this->cosmeticCommandSupport) {
                         $this->getForms()->menuForm($sender);
                     }
                 } else {
@@ -189,96 +182,81 @@ class CosmeticMenu extends PluginBase implements Listener
         return true;
     }
 
-    function getMain(): CosmeticMenu
-    {
-        return $this;
-    }
-
-    function getConfig(): Config
-    {
-        return $this->config;
-    }
-
-    function getForms(): MainForm
-    {
+    function getForms(): MainForm {
         return $this->forms;
     }
 
-    function getGadgets(): GadgetForm
-    {
+    function getMain(): CosmeticMenu {
+        return $this;
+    }
+
+    function getConfig(): Config {
+        return $this->config;
+    }
+
+    function getGadgets(): GadgetForm {
         return $this->gadgets;
     }
 
-    function getParticles(): ParticleForm
-    {
+    function getParticles(): ParticleForm {
         return $this->particles;
     }
 
-    function getMorphs(): MorphForm
-    {
+    function getMorphs(): MorphForm {
         return $this->morphs;
     }
 
-    function getTrails(): TrailForm
-    {
+    function getTrails(): TrailForm {
         return $this->trails;
     }
 
-    function getSuits(): SuitForm
-    {
+    function getSuits(): SuitForm {
         return $this->suits;
     }
 
-    public function getCosmeticItemSupport(): bool
-    {
+    public function getCosmeticItemSupport(): bool {
         return $this->cosmeticItemSupport;
     }
 
     /**
      * @return string
      */
-    public function getPluginVersion(): string
-    {
+    public function getPluginVersion(): string {
         return $this->pluginVersion;
     }
 
     /**
      * @return string
      */
-    public function getCosmeticName(): string
-    {
+    public function getCosmeticName(): string {
         return $this->cosmeticName;
     }
 
     /**
      * @return array
      */
-    public function getCosmeticDes(): array
-    {
+    public function getCosmeticDes(): array {
         return $this->cosmeticDes;
     }
 
     /**
      * @return int
      */
-    public function getCosmeticForceSlot(): int
-    {
+    public function getCosmeticForceSlot(): int {
         return $this->cosmeticForceSlot;
     }
 
     /**
      * @return string
      */
-    public function getCosmeticItemType(): string
-    {
+    public function getCosmeticItemType(): string {
         return $this->cosmeticItemType;
     }
 
     /**
      * @return bool
      */
-    public function getCosmeticCommandSupport(): bool
-    {
+    public function getCosmeticCommandSupport(): bool {
         return $this->cosmeticCommandSupport;
     }
 

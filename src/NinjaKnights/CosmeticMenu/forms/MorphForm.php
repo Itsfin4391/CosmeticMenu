@@ -1,43 +1,40 @@
-<?php 
+<?php
 
 namespace NinjaKnights\CosmeticMenu\forms;
-    
+
 use jojoe77777\FormAPI\SimpleForm;
 use NinjaKnights\CosmeticMenu\CosmeticMenu;
 use pocketmine\Player;
 use pocketmine\Server;
 
-class MorphForm
-{
+class MorphForm {
 
     private $plugin;
 
-    public function __construct(CosmeticMenu $plugin)
-    {
+    public function __construct(CosmeticMenu $plugin) {
         $this->plugin = $plugin;
     }
 
-    public function openMorphs($player)
-    {
-        $form = new SimpleForm(function (Player $player, $data) {
+    public function openMorphs($player) {
+        $form = new SimpleForm(function(Player $player, $data) {
             $result = $data;
-            if ($result === null) {
+            if($result === null) {
                 return true;
             }
-            switch ($result) {
+            switch($result) {
                 case 0:
-                    if($player->hasPermission("cosmetic.morphs.zombie")){
+                    if($player->hasPermission("cosmetic.morphs.zombie")) {
                         Server::getInstance()->dispatchCommand($player, "morph zombie");
                     }
-                break;
+                    break;
 
                 case 1:
                     Server::getInstance()->dispatchCommand($player, "morph remove");
-                break;
+                    break;
 
                 case 2:
-                    $this->getMain()->getForms()->menuForm($player);    
-                break;
+                    $this->getMain()->getForms()->menuForm($player);
+                    break;
             }
         });
 
@@ -50,8 +47,7 @@ class MorphForm
         return $form;
     }
 
-    function getMain(): CosmeticMenu
-    {
+    function getMain(): CosmeticMenu {
         return $this->plugin;
     }
 

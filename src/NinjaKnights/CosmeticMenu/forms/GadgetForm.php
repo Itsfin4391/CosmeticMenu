@@ -1,87 +1,84 @@
-<?php 
+<?php
 
 namespace NinjaKnights\CosmeticMenu\forms;
-    
+
 use jojoe77777\FormAPI\SimpleForm;
 use NinjaKnights\CosmeticMenu\CosmeticMenu;
 use pocketmine\item\Item;
 use pocketmine\Player;
 
-class GadgetForm
-{
+class GadgetForm {
 
     private $plugin;
 
-    public function __construct(CosmeticMenu $plugin)
-    {
+    public function __construct(CosmeticMenu $plugin) {
         $this->plugin = $plugin;
     }
 
-    public function openGadgets($player)
-    {
-        $form = new SimpleForm(function (Player $player, $data) {
+    public function openGadgets($player) {
+        $form = new SimpleForm(function(Player $player, $data) {
             $result = $data;
-            if ($result === null) {
+            if($result === null) {
                 return true;
             }
-            switch ($result) {
+            switch($result) {
                 case 0:
-                    if($player->hasPermission("cosmetic.gadgets.tntlauncher")){
+                    if($player->hasPermission("cosmetic.gadgets.tntlauncher")) {
                         $inv = $player->getInventory();
                         $slot = $this->plugin->getConfig()->getNested("Cosmetic.Slot");
                         $air = Item::get(0, 0, 1);
-                        $inv->setItem($slot,$air,true);
-		
-		                $item = Item::get(352, 0, 1);
+                        $inv->setItem($slot, $air, true);
+
+                        $item = Item::get(352, 0, 1);
                         $item->setCustomName("TNT-Launcher");
-                        $inv->setItem($slot,$item,true);
-                    
-                        $item1 = Item::get(355, 0 , 1);
+                        $inv->setItem($slot, $item, true);
+
+                        $item1 = Item::get(355, 0, 1);
                         $item1->setCustomName("§l§4<< Back");
-                        $inv->setItem($slot+1,$item1,true);
-			
+                        $inv->setItem($slot + 1, $item1, true);
+
                     }
-                break;
+                    break;
 
                 case 1:
-                    if($player->hasPermission("cosmetic.gadgets.lightningstick")){
+                    if($player->hasPermission("cosmetic.gadgets.lightningstick")) {
                         $inv = $player->getInventory();
                         $slot = $this->plugin->getConfig()->getNested("Cosmetic.Slot");
                         $air = Item::get(0, 0, 1);
-                        $inv->setItem($slot,$air,true);
-		
+                        $inv->setItem($slot, $air, true);
+
                         $item = Item::get(369, 0, 1);
                         $item->setCustomName("Lightning Stick");
-                        $inv->setItem($slot,$item,true);
+                        $inv->setItem($slot, $item, true);
 
-                        $item1 = Item::get(355, 0 , 1);
+                        $item1 = Item::get(355, 0, 1);
                         $item1->setCustomName("§l§4<< Back");
-                        $inv->setItem($slot+1,$item1,true);
+                        $inv->setItem($slot + 1, $item1, true);
 
                     }
-                break;
+                    break;
 
                 case 2:
-                    if($player->hasPermission("cosmetic.gadgets.leaper")){
+                    if($player->hasPermission("cosmetic.gadgets.leaper")) {
                         $inv = $player->getInventory();
                         $slot = $this->plugin->getConfig()->getNested("Cosmetic.Slot");
                         $air = Item::get(0, 0, 1);
-                        $inv->setItem($slot,$air,true);
-		
-		                $item = Item::get(288, 0, 1);
-		                $item->setCustomName("Leaper");
-                        $inv->setItem($slot,$item,true);
-                        
-                        $item1 = Item::get(355, 0 , 1);
+                        $inv->setItem($slot, $air, true);
+
+                        $item = Item::get(288, 0, 1);
+                        $item->setCustomName("Leaper");
+                        $inv->setItem($slot, $item, true);
+
+                        $item1 = Item::get(355, 0, 1);
                         $item1->setCustomName("§l§4<< Back");
-                        $inv->setItem($slot+1,$item1,true);
+                        $inv->setItem($slot + 1, $item1, true);
 
                     }
-                break;
+                    break;
 
                 case 3:
                     $this->getMain()->getForms()->menuForm($player);
-                break;
+                    break;
             }
         });
 
@@ -95,8 +92,7 @@ class GadgetForm
         return $form;
     }
 
-    function getMain(): CosmeticMenu
-    {
+    function getMain(): CosmeticMenu {
         return $this->plugin;
     }
 

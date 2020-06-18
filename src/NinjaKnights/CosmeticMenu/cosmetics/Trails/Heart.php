@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace NinjaKnights\CosmeticMenu\cosmetics\Trails;
 
@@ -7,25 +7,22 @@ use pocketmine\level\particle\HeartParticle;
 use pocketmine\math\Vector3;
 use pocketmine\scheduler\Task as PluginTask;
 
-class Heart extends PluginTask
-{
+class Heart extends PluginTask {
 
-    public function __construct(CosmeticMenu $plugin)
-    {
+    public function __construct(CosmeticMenu $plugin) {
         $this->plugin = $plugin;
         $this->r = 0;
     }
 
-    public function onRun($tick)
-    {
-        foreach ($this->plugin->getServer()->getOnlinePlayers() as $player) {
+    public function onRun($tick) {
+        foreach($this->plugin->getServer()->getOnlinePlayers() as $player) {
             $name = $player->getName();
             $level = $player->getLevel();
 
             $x = $player->getX();
             $y = $player->getY();
             $z = $player->getZ();
-            if (in_array($name, $this->plugin->trail3)) {
+            if(in_array($name, $this->plugin->trail3)) {
                 $size = 0.6;
                 $a = cos(deg2rad($this->r / 0.06)) * $size;
                 $b = sin(deg2rad($this->r / 0.06)) * $size;
