@@ -2,53 +2,54 @@
 
 namespace NinjaKnights\CosmeticMenu\forms;
     
-use NinjaKnights\CosmeticMenu\Main;
 use jojoe77777\FormAPI\SimpleForm;
+use NinjaKnights\CosmeticMenu\CosmeticMenu;
 use pocketmine\Player;
-use pocketmine\Server;
-use pocketmine\item\Item;
-    
-class TrailForm {
-    
-    private $main;
 
-    public function __construct(Main $main){
-        $this->main = $main;
+class TrailForm
+{
+
+    private $plugin;
+
+    public function __construct(CosmeticMenu $plugin)
+    {
+        $this->plugin = $plugin;
     }
 
-    public function openTrails($player) {
+    public function openTrails($player)
+    {
         $form = new SimpleForm(function (Player $player, $data) {
-        $result = $data;
-            if($result === null) {
+            $result = $data;
+            if ($result === null) {
                 return true;
             }
-            switch($result) {
+            switch ($result) {
                 case 0:
                     if($player->hasPermission("cosmetic.trails.flame")){
                         $name = $player->getName();
     
                         if(!in_array($name, $this->getMain()->trail1)) {
-                    
+
                             $this->getMain()->trail1[] = $name;
-                            
-                            if(in_array($name, $this->main->trail2)) {
-                                unset($this->main->trail2[array_search($name, $this->main->trail2)]);
-                            } elseif(in_array($name, $this->main->trail3)) {
-                                unset($this->main->trail3[array_search($name, $this->main->trail3)]);
-                            } elseif(in_array($name, $this->main->trail4)) {
-                                unset($this->main->trail4[array_search($name, $this->main->trail4)]);
+
+                            if (in_array($name, $this->plugin->trail2)) {
+                                unset($this->plugin->trail2[array_search($name, $this->plugin->trail2)]);
+                            } elseif (in_array($name, $this->plugin->trail3)) {
+                                unset($this->plugin->trail3[array_search($name, $this->plugin->trail3)]);
+                            } elseif (in_array($name, $this->plugin->trail4)) {
+                                unset($this->plugin->trail4[array_search($name, $this->plugin->trail4)]);
                             }
-                            
+
                         } else {
-                            
-                            if(in_array($name, $this->main->trail1)) {
-                                unset($this->main->trail1[array_search($name, $this->main->trail1)]);
-                            } elseif(in_array($name, $this->main->trail2)) {
-                                unset($this->main->trail2[array_search($name, $this->main->trail2)]);
-                            } elseif(in_array($name, $this->main->trail3)) {
-                                unset($this->main->trail3[array_search($name, $this->main->trail3)]);
-                            } elseif(in_array($name, $this->main->trail4)) {
-                                unset($this->main->trail4[array_search($name, $this->main->trail4)]);
+
+                            if (in_array($name, $this->plugin->trail1)) {
+                                unset($this->plugin->trail1[array_search($name, $this->plugin->trail1)]);
+                            } elseif (in_array($name, $this->plugin->trail2)) {
+                                unset($this->plugin->trail2[array_search($name, $this->plugin->trail2)]);
+                            } elseif (in_array($name, $this->plugin->trail3)) {
+                                unset($this->plugin->trail3[array_search($name, $this->plugin->trail3)]);
+                            } elseif (in_array($name, $this->plugin->trail4)) {
+                                unset($this->plugin->trail4[array_search($name, $this->plugin->trail4)]);
                             }
                         }
                     }
@@ -57,29 +58,29 @@ class TrailForm {
                 case 1:
                     if($player->hasPermission("cosmetic.trails.snow")){
                         $name = $player->getName();
-    
-                        if(!in_array($name, $this->main->trail2)) {
-                    
-                            $this->main->trail2[] = $name;
 
-                            if(in_array($name, $this->main->trail1)) {
-                                unset($this->main->trail1[array_search($name, $this->main->trail1)]);
-                            } elseif(in_array($name, $this->main->trail3)) {
-                                unset($this->main->trail3[array_search($name, $this->main->trail3)]);
-                            } elseif(in_array($name, $this->main->trail4)) {
-                                unset($this->main->trail4[array_search($name, $this->main->trail4)]);
+                        if (!in_array($name, $this->plugin->trail2)) {
+
+                            $this->plugin->trail2[] = $name;
+
+                            if (in_array($name, $this->plugin->trail1)) {
+                                unset($this->plugin->trail1[array_search($name, $this->plugin->trail1)]);
+                            } elseif (in_array($name, $this->plugin->trail3)) {
+                                unset($this->plugin->trail3[array_search($name, $this->plugin->trail3)]);
+                            } elseif (in_array($name, $this->plugin->trail4)) {
+                                unset($this->plugin->trail4[array_search($name, $this->plugin->trail4)]);
                             }
-                            
+
                         } else {
-                            
-                            if(in_array($name, $this->main->trail1)) {
-                                unset($this->main->trail1[array_search($name, $this->main->trail1)]);
-                            } elseif(in_array($name, $this->main->trail2)) {
-                                unset($this->main->trail2[array_search($name, $this->main->trail2)]);
-                            } elseif(in_array($name, $this->main->trail3)) {
-                                unset($this->main->trail3[array_search($name, $this->main->trail3)]);
-                            } elseif(in_array($name, $this->main->trail4)) {
-                                unset($this->main->trail4[array_search($name, $this->main->trail4)]);
+
+                            if (in_array($name, $this->plugin->trail1)) {
+                                unset($this->plugin->trail1[array_search($name, $this->plugin->trail1)]);
+                            } elseif (in_array($name, $this->plugin->trail2)) {
+                                unset($this->plugin->trail2[array_search($name, $this->plugin->trail2)]);
+                            } elseif (in_array($name, $this->plugin->trail3)) {
+                                unset($this->plugin->trail3[array_search($name, $this->plugin->trail3)]);
+                            } elseif (in_array($name, $this->plugin->trail4)) {
+                                unset($this->plugin->trail4[array_search($name, $this->plugin->trail4)]);
                             }
                         }
                     }
@@ -88,29 +89,29 @@ class TrailForm {
                 case 2:
                     if($player->hasPermission("cosmetic.trails.heart")){
                         $name = $player->getName();
-    
-                        if(!in_array($name, $this->main->trail3)) {
-                    
-                            $this->main->trail3[] = $name;
 
-                            if(in_array($name, $this->main->trail1)) {
-                                unset($this->main->trail1[array_search($name, $this->main->trail1)]);
-                            } elseif(in_array($name, $this->main->trail2)) {
-                                unset($this->main->trail2[array_search($name, $this->main->trail2)]);
-                            } elseif(in_array($name, $this->main->trail4)) {
-                                unset($this->main->trail4[array_search($name, $this->main->trail4)]);
+                        if (!in_array($name, $this->plugin->trail3)) {
+
+                            $this->plugin->trail3[] = $name;
+
+                            if (in_array($name, $this->plugin->trail1)) {
+                                unset($this->plugin->trail1[array_search($name, $this->plugin->trail1)]);
+                            } elseif (in_array($name, $this->plugin->trail2)) {
+                                unset($this->plugin->trail2[array_search($name, $this->plugin->trail2)]);
+                            } elseif (in_array($name, $this->plugin->trail4)) {
+                                unset($this->plugin->trail4[array_search($name, $this->plugin->trail4)]);
                             }
-                            
+
                         } else {
-                            
-                            if(in_array($name, $this->main->trail1)) {
-                                unset($this->main->trail1[array_search($name, $this->main->trail1)]);
-                            } elseif(in_array($name, $this->main->trail2)) {
-                                unset($this->main->trail2[array_search($name, $this->main->trail2)]);
-                            } elseif(in_array($name, $this->main->trail3)) {
-                                unset($this->main->trail3[array_search($name, $this->main->trail3)]);
-                            } elseif(in_array($name, $this->main->trail4)) {
-                                unset($this->main->trail4[array_search($name, $this->main->trail4)]);
+
+                            if (in_array($name, $this->plugin->trail1)) {
+                                unset($this->plugin->trail1[array_search($name, $this->plugin->trail1)]);
+                            } elseif (in_array($name, $this->plugin->trail2)) {
+                                unset($this->plugin->trail2[array_search($name, $this->plugin->trail2)]);
+                            } elseif (in_array($name, $this->plugin->trail3)) {
+                                unset($this->plugin->trail3[array_search($name, $this->plugin->trail3)]);
+                            } elseif (in_array($name, $this->plugin->trail4)) {
+                                unset($this->plugin->trail4[array_search($name, $this->plugin->trail4)]);
                             }
                         }
                     }
@@ -119,29 +120,29 @@ class TrailForm {
                 case 3:
                     if($player->hasPermission("cosmetic.trails.smoke")){
                         $name = $player->getName();
-    
-                        if(!in_array($name, $this->main->trail4)) {
-                    
-                            $this->main->trail4[] = $name;
-                            
-                            if(in_array($name, $this->main->trail1)) {
-                                unset($this->main->trail1[array_search($name, $this->main->trail1)]);
-                            } elseif(in_array($name, $this->main->trail2)) {
-                                unset($this->main->trail2[array_search($name, $this->main->trail2)]);
-                            } elseif(in_array($name, $this->main->trail3)) {
-                                unset($this->main->trail3[array_search($name, $this->main->trail3)]);
+
+                        if (!in_array($name, $this->plugin->trail4)) {
+
+                            $this->plugin->trail4[] = $name;
+
+                            if (in_array($name, $this->plugin->trail1)) {
+                                unset($this->plugin->trail1[array_search($name, $this->plugin->trail1)]);
+                            } elseif (in_array($name, $this->plugin->trail2)) {
+                                unset($this->plugin->trail2[array_search($name, $this->plugin->trail2)]);
+                            } elseif (in_array($name, $this->plugin->trail3)) {
+                                unset($this->plugin->trail3[array_search($name, $this->plugin->trail3)]);
                             }
-                            
+
                         } else {
-                            
-                            if(in_array($name, $this->main->trail1)) {
-                                unset($this->main->trail1[array_search($name, $this->main->trail1)]);
-                            } elseif(in_array($name, $this->main->trail2)) {
-                                unset($this->main->trail2[array_search($name, $this->main->trail2)]);
-                            } elseif(in_array($name, $this->main->trail3)) {
-                                unset($this->main->trail3[array_search($name, $this->main->trail3)]);
-                            } elseif(in_array($name, $this->main->trail4)) {
-                                unset($this->main->trail4[array_search($name, $this->main->trail4)]);
+
+                            if (in_array($name, $this->plugin->trail1)) {
+                                unset($this->plugin->trail1[array_search($name, $this->plugin->trail1)]);
+                            } elseif (in_array($name, $this->plugin->trail2)) {
+                                unset($this->plugin->trail2[array_search($name, $this->plugin->trail2)]);
+                            } elseif (in_array($name, $this->plugin->trail3)) {
+                                unset($this->plugin->trail3[array_search($name, $this->plugin->trail3)]);
+                            } elseif (in_array($name, $this->plugin->trail4)) {
+                                unset($this->plugin->trail4[array_search($name, $this->plugin->trail4)]);
                             }
                         }
                     }
@@ -150,16 +151,16 @@ class TrailForm {
                 case 4:
                     $name = $player->getName();
 
-                    if(in_array($name, $this->main->trail1)) {
-                        unset($this->main->trail1[array_search($name, $this->main->trail1)]);
-                    } elseif(in_array($name, $this->main->trail2)) {
-                        unset($this->main->trail2[array_search($name, $this->main->trail2)]);
-                    } elseif(in_array($name, $this->main->trail3)) {
-                        unset($this->main->trail3[array_search($name, $this->main->trail3)]);
-                    } elseif(in_array($name, $this->main->trail4)) {
-                        unset($this->main->trail4[array_search($name, $this->main->trail4)]);
+                    if (in_array($name, $this->plugin->trail1)) {
+                        unset($this->plugin->trail1[array_search($name, $this->plugin->trail1)]);
+                    } elseif (in_array($name, $this->plugin->trail2)) {
+                        unset($this->plugin->trail2[array_search($name, $this->plugin->trail2)]);
+                    } elseif (in_array($name, $this->plugin->trail3)) {
+                        unset($this->plugin->trail3[array_search($name, $this->plugin->trail3)]);
+                    } elseif (in_array($name, $this->plugin->trail4)) {
+                        unset($this->plugin->trail4[array_search($name, $this->plugin->trail4)]);
                     }
-                break;
+                    break;
 
                 case 5:
                     $this->getMain()->getForms()->menuForm($player);
@@ -179,8 +180,9 @@ class TrailForm {
         return $form;
     }
 
-    function getMain() : Main {
-        return $this->main;
+    function getMain(): CosmeticMenu
+    {
+        return $this->plugin;
     }
 
 }

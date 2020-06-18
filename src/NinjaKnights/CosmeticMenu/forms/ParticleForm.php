@@ -2,30 +2,28 @@
 
 namespace NinjaKnights\CosmeticMenu\forms;
     
-use NinjaKnights\CosmeticMenu\Main;
 use jojoe77777\FormAPI\SimpleForm;
+use NinjaKnights\CosmeticMenu\CosmeticMenu;
 use pocketmine\Player;
-use pocketmine\Server;
-use pocketmine\item\Item;
-use pocketmine\level\Level;
-use pocketmine\level\Position;
-use pocketmine\level\Location;
-    
-class ParticleForm {
-    
-    private $main;
 
-    public function __construct(Main $main){
-        $this->main = $main;
+class ParticleForm
+{
+
+    private $plugin;
+
+    public function __construct(CosmeticMenu $plugin)
+    {
+        $this->plugin = $plugin;
     }
 
-     public function openParticles($player) {
+    public function openParticles($player)
+    {
         $form = new SimpleForm(function (Player $player, $data) {
-        $result = $data;
-            if($result === null) {
+            $result = $data;
+            if ($result === null) {
                 return true;
             }
-            switch($result) {
+            switch ($result) {
                 //Rain Cloud
                 case 0:
                     if($player->hasPermission("cosmetic.particles.raincloud")){
@@ -35,48 +33,48 @@ class ParticleForm {
 
                             $this->getMain()->particle1[] = $name;
 
-                            if(in_array($name, $this->main->particle2)) {
-                                unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-                            } elseif(in_array($name, $this->main->particle3)) {
-                                unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-                            } elseif(in_array($name, $this->main->particle4)) {
-                                unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                            } elseif(in_array($name, $this->main->particle5)) {
-                                unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-                            } elseif(in_array($name, $this->main->particle6)) {
-                                unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-                            } elseif(in_array($name, $this->main->particle7)) {
-                                unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-                            } elseif(in_array($name, $this->main->particle8)) {
-                                unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-                            } elseif(in_array($name, $this->main->particle9)) {
-                                unset($this->main->particle9[array_search($name, $this->main->particle9)]);
-                            } elseif(in_array($name, $this->main->particle10)) {
-                                unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+                            if (in_array($name, $this->plugin->particle2)) {
+                                unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+                            } elseif (in_array($name, $this->plugin->particle3)) {
+                                unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+                            } elseif (in_array($name, $this->plugin->particle4)) {
+                                unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                            } elseif (in_array($name, $this->plugin->particle5)) {
+                                unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+                            } elseif (in_array($name, $this->plugin->particle6)) {
+                                unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+                            } elseif (in_array($name, $this->plugin->particle7)) {
+                                unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+                            } elseif (in_array($name, $this->plugin->particle8)) {
+                                unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+                            } elseif (in_array($name, $this->plugin->particle9)) {
+                                unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
+                            } elseif (in_array($name, $this->plugin->particle10)) {
+                                unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
                             }
 
                         } else {
-                            
-                            if(in_array($name, $this->main->particle1)) {
-                                unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-                            } elseif(in_array($name, $this->main->particle2)) {
-                                unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-                            } elseif(in_array($name, $this->main->particle3)) {
-                                unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-                            } elseif(in_array($name, $this->main->particle4)) {
-                                unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                            } elseif(in_array($name, $this->main->particle5)) {
-                                unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-                            } elseif(in_array($name, $this->main->particle6)) {
-                                unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-                            } elseif(in_array($name, $this->main->particle7)) {
-                                unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-                            } elseif(in_array($name, $this->main->particle8)) {
-                                unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-                            } elseif(in_array($name, $this->main->particle9)) {
-                                unset($this->main->particle9[array_search($name, $this->main->particle9)]);
-                            } elseif(in_array($name, $this->main->particle10)) {
-                                unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+
+                            if (in_array($name, $this->plugin->particle1)) {
+                                unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+                            } elseif (in_array($name, $this->plugin->particle2)) {
+                                unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+                            } elseif (in_array($name, $this->plugin->particle3)) {
+                                unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+                            } elseif (in_array($name, $this->plugin->particle4)) {
+                                unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                            } elseif (in_array($name, $this->plugin->particle5)) {
+                                unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+                            } elseif (in_array($name, $this->plugin->particle6)) {
+                                unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+                            } elseif (in_array($name, $this->plugin->particle7)) {
+                                unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+                            } elseif (in_array($name, $this->plugin->particle8)) {
+                                unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+                            } elseif (in_array($name, $this->plugin->particle9)) {
+                                unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
+                            } elseif (in_array($name, $this->plugin->particle10)) {
+                                unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
                             }
 
                         }
@@ -92,48 +90,48 @@ class ParticleForm {
 
                             $this->getMain()->particle2[] = $name;
 
-                            if(in_array($name, $this->main->particle1)) {
-                                unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-                            } elseif(in_array($name, $this->main->particle3)) {
-                                unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-                            } elseif(in_array($name, $this->main->particle4)) {
-                                unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                            } elseif(in_array($name, $this->main->particle5)) {
-                                unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-                            } elseif(in_array($name, $this->main->particle6)) {
-                                unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-                            } elseif(in_array($name, $this->main->particle7)) {
-                                unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-                            } elseif(in_array($name, $this->main->particle8)) {
-                                unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-                            } elseif(in_array($name, $this->main->particle9)) {
-                                unset($this->main->particle9[array_search($name, $this->main->particle9)]);
-                            } elseif(in_array($name, $this->main->particle10)) {
-                                unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+                            if (in_array($name, $this->plugin->particle1)) {
+                                unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+                            } elseif (in_array($name, $this->plugin->particle3)) {
+                                unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+                            } elseif (in_array($name, $this->plugin->particle4)) {
+                                unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                            } elseif (in_array($name, $this->plugin->particle5)) {
+                                unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+                            } elseif (in_array($name, $this->plugin->particle6)) {
+                                unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+                            } elseif (in_array($name, $this->plugin->particle7)) {
+                                unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+                            } elseif (in_array($name, $this->plugin->particle8)) {
+                                unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+                            } elseif (in_array($name, $this->plugin->particle9)) {
+                                unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
+                            } elseif (in_array($name, $this->plugin->particle10)) {
+                                unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
                             }
 
                         } else {
 
-                            if(in_array($name, $this->main->particle1)) {
-                                unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-                            } elseif(in_array($name, $this->main->particle2)) {
-                                unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-                            } elseif(in_array($name, $this->main->particle3)) {
-                                unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-                            } elseif(in_array($name, $this->main->particle4)) {
-                                unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                            } elseif(in_array($name, $this->main->particle5)) {
-                                unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-                            } elseif(in_array($name, $this->main->particle6)) {
-                                unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-                            } elseif(in_array($name, $this->main->particle7)) {
-                                unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-                            } elseif(in_array($name, $this->main->particle8)) {
-                                unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-                            } elseif(in_array($name, $this->main->particle9)) {
-                                unset($this->main->particle9[array_search($name, $this->main->particle9)]);
-                            } elseif(in_array($name, $this->main->particle10)) {
-                                unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+                            if (in_array($name, $this->plugin->particle1)) {
+                                unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+                            } elseif (in_array($name, $this->plugin->particle2)) {
+                                unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+                            } elseif (in_array($name, $this->plugin->particle3)) {
+                                unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+                            } elseif (in_array($name, $this->plugin->particle4)) {
+                                unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                            } elseif (in_array($name, $this->plugin->particle5)) {
+                                unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+                            } elseif (in_array($name, $this->plugin->particle6)) {
+                                unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+                            } elseif (in_array($name, $this->plugin->particle7)) {
+                                unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+                            } elseif (in_array($name, $this->plugin->particle8)) {
+                                unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+                            } elseif (in_array($name, $this->plugin->particle9)) {
+                                unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
+                            } elseif (in_array($name, $this->plugin->particle10)) {
+                                unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
                             }
 
                         }
@@ -148,48 +146,48 @@ class ParticleForm {
 
                             $this->getMain()->particle3[] = $name;
 
-                            if(in_array($name, $this->main->particle1)) {
-                                unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-                            } elseif(in_array($name, $this->main->particle2)) {
-                                unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-                            } elseif(in_array($name, $this->main->particle4)) {
-                                unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                            } elseif(in_array($name, $this->main->particle5)) {
-                                unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-                            } elseif(in_array($name, $this->main->particle6)) {
-                                unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-                            } elseif(in_array($name, $this->main->particle7)) {
-                                unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-                            } elseif(in_array($name, $this->main->particle8)) {
-                                unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-                            } elseif(in_array($name, $this->main->particle9)) {
-                                unset($this->main->particle9[array_search($name, $this->main->particle9)]);
-                            } elseif(in_array($name, $this->main->particle10)) {
-                                unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+                            if (in_array($name, $this->plugin->particle1)) {
+                                unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+                            } elseif (in_array($name, $this->plugin->particle2)) {
+                                unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+                            } elseif (in_array($name, $this->plugin->particle4)) {
+                                unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                            } elseif (in_array($name, $this->plugin->particle5)) {
+                                unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+                            } elseif (in_array($name, $this->plugin->particle6)) {
+                                unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+                            } elseif (in_array($name, $this->plugin->particle7)) {
+                                unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+                            } elseif (in_array($name, $this->plugin->particle8)) {
+                                unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+                            } elseif (in_array($name, $this->plugin->particle9)) {
+                                unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
+                            } elseif (in_array($name, $this->plugin->particle10)) {
+                                unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
                             }
 
                         } else {
 
-                            if(in_array($name, $this->main->particle1)) {
-                                unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-                            } elseif(in_array($name, $this->main->particle2)) {
-                                unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-                            } elseif(in_array($name, $this->main->particle3)) {
-                                unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-                            } elseif(in_array($name, $this->main->particle4)) {
-                                unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                            } elseif(in_array($name, $this->main->particle5)) {
-                                unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-                            } elseif(in_array($name, $this->main->particle6)) {
-                                unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-                            } elseif(in_array($name, $this->main->particle7)) {
-                                unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-                            } elseif(in_array($name, $this->main->particle8)) {
-                                unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-                            } elseif(in_array($name, $this->main->particle9)) {
-                                unset($this->main->particle9[array_search($name, $this->main->particle9)]);
-                            } elseif(in_array($name, $this->main->particle10)) {
-                                unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+                            if (in_array($name, $this->plugin->particle1)) {
+                                unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+                            } elseif (in_array($name, $this->plugin->particle2)) {
+                                unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+                            } elseif (in_array($name, $this->plugin->particle3)) {
+                                unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+                            } elseif (in_array($name, $this->plugin->particle4)) {
+                                unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                            } elseif (in_array($name, $this->plugin->particle5)) {
+                                unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+                            } elseif (in_array($name, $this->plugin->particle6)) {
+                                unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+                            } elseif (in_array($name, $this->plugin->particle7)) {
+                                unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+                            } elseif (in_array($name, $this->plugin->particle8)) {
+                                unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+                            } elseif (in_array($name, $this->plugin->particle9)) {
+                                unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
+                            } elseif (in_array($name, $this->plugin->particle10)) {
+                                unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
                             }
 
                         }
@@ -204,50 +202,50 @@ class ParticleForm {
 
                             $this->getMain()->particle4[] = $name;
 
-                            if(in_array($name, $this->main->particle1)) {
-                                unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-                            } elseif(in_array($name, $this->main->particle2)) {
-                                unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-                            } elseif(in_array($name, $this->main->particle3)) {
-                                unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-                            } elseif(in_array($name, $this->main->particle4)) {
-                                unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                            } elseif(in_array($name, $this->main->particle5)) {
-                                unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-                            } elseif(in_array($name, $this->main->particle6)) {
-                                unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-                            } elseif(in_array($name, $this->main->particle7)) {
-                                unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-                            } elseif(in_array($name, $this->main->particle8)) {
-                                unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-                            } elseif(in_array($name, $this->main->particle9)) {
-                                unset($this->main->particle9[array_search($name, $this->main->particle9)]);
-                            } elseif(in_array($name, $this->main->particle10)) {
-                                unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+                            if (in_array($name, $this->plugin->particle1)) {
+                                unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+                            } elseif (in_array($name, $this->plugin->particle2)) {
+                                unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+                            } elseif (in_array($name, $this->plugin->particle3)) {
+                                unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+                            } elseif (in_array($name, $this->plugin->particle4)) {
+                                unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                            } elseif (in_array($name, $this->plugin->particle5)) {
+                                unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+                            } elseif (in_array($name, $this->plugin->particle6)) {
+                                unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+                            } elseif (in_array($name, $this->plugin->particle7)) {
+                                unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+                            } elseif (in_array($name, $this->plugin->particle8)) {
+                                unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+                            } elseif (in_array($name, $this->plugin->particle9)) {
+                                unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
+                            } elseif (in_array($name, $this->plugin->particle10)) {
+                                unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
                             }
 
                         } else {
 
-                            if(in_array($name, $this->main->particle1)) {
-                                unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-                            } elseif(in_array($name, $this->main->particle2)) {
-                                unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-                            } elseif(in_array($name, $this->main->particle3)) {
-                                unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-                            } elseif(in_array($name, $this->main->particle4)) {
-                                unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                            } elseif(in_array($name, $this->main->particle5)) {
-                                unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-                            } elseif(in_array($name, $this->main->particle6)) {
-                                unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-                            } elseif(in_array($name, $this->main->particle7)) {
-                                unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-                            } elseif(in_array($name, $this->main->particle8)) {
-                                unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-                            } elseif(in_array($name, $this->main->particle9)) {
-                                unset($this->main->particle9[array_search($name, $this->main->particle9)]);
-                            } elseif(in_array($name, $this->main->particle10)) {
-                                unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+                            if (in_array($name, $this->plugin->particle1)) {
+                                unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+                            } elseif (in_array($name, $this->plugin->particle2)) {
+                                unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+                            } elseif (in_array($name, $this->plugin->particle3)) {
+                                unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+                            } elseif (in_array($name, $this->plugin->particle4)) {
+                                unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                            } elseif (in_array($name, $this->plugin->particle5)) {
+                                unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+                            } elseif (in_array($name, $this->plugin->particle6)) {
+                                unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+                            } elseif (in_array($name, $this->plugin->particle7)) {
+                                unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+                            } elseif (in_array($name, $this->plugin->particle8)) {
+                                unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+                            } elseif (in_array($name, $this->plugin->particle9)) {
+                                unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
+                            } elseif (in_array($name, $this->plugin->particle10)) {
+                                unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
                             }
 
                         } 
@@ -262,48 +260,48 @@ class ParticleForm {
 
                             $this->getMain()->particle5[] = $name;
 
-                            if(in_array($name, $this->main->particle1)) {
-                                unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-                            } elseif(in_array($name, $this->main->particle2)) {
-                                unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-                            } elseif(in_array($name, $this->main->particle3)) {
-                                unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-                            } elseif(in_array($name, $this->main->particle4)) {
-                                unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                            } elseif(in_array($name, $this->main->particle6)) {
-                                unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-                            } elseif(in_array($name, $this->main->particle7)) {
-                                unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-                            } elseif(in_array($name, $this->main->particle8)) {
-                                unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-                            } elseif(in_array($name, $this->main->particle9)) {
-                                unset($this->main->particle9[array_search($name, $this->main->particle9)]);
-                            } elseif(in_array($name, $this->main->particle10)) {
-                                unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+                            if (in_array($name, $this->plugin->particle1)) {
+                                unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+                            } elseif (in_array($name, $this->plugin->particle2)) {
+                                unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+                            } elseif (in_array($name, $this->plugin->particle3)) {
+                                unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+                            } elseif (in_array($name, $this->plugin->particle4)) {
+                                unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                            } elseif (in_array($name, $this->plugin->particle6)) {
+                                unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+                            } elseif (in_array($name, $this->plugin->particle7)) {
+                                unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+                            } elseif (in_array($name, $this->plugin->particle8)) {
+                                unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+                            } elseif (in_array($name, $this->plugin->particle9)) {
+                                unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
+                            } elseif (in_array($name, $this->plugin->particle10)) {
+                                unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
                             }
 
                         } else {
 
-                            if(in_array($name, $this->main->particle1)) {
-                                unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-                            } elseif(in_array($name, $this->main->particle2)) {
-                                unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-                            } elseif(in_array($name, $this->main->particle3)) {
-                                unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-                            } elseif(in_array($name, $this->main->particle4)) {
-                                unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                            } elseif(in_array($name, $this->main->particle5)) {
-                                unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-                            } elseif(in_array($name, $this->main->particle6)) {
-                                unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-                            } elseif(in_array($name, $this->main->particle7)) {
-                                unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-                            } elseif(in_array($name, $this->main->particle8)) {
-                                unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-                            } elseif(in_array($name, $this->main->particle9)) {
-                                unset($this->main->particle9[array_search($name, $this->main->particle9)]);
-                            } elseif(in_array($name, $this->main->particle10)) {
-                                unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+                            if (in_array($name, $this->plugin->particle1)) {
+                                unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+                            } elseif (in_array($name, $this->plugin->particle2)) {
+                                unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+                            } elseif (in_array($name, $this->plugin->particle3)) {
+                                unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+                            } elseif (in_array($name, $this->plugin->particle4)) {
+                                unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                            } elseif (in_array($name, $this->plugin->particle5)) {
+                                unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+                            } elseif (in_array($name, $this->plugin->particle6)) {
+                                unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+                            } elseif (in_array($name, $this->plugin->particle7)) {
+                                unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+                            } elseif (in_array($name, $this->plugin->particle8)) {
+                                unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+                            } elseif (in_array($name, $this->plugin->particle9)) {
+                                unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
+                            } elseif (in_array($name, $this->plugin->particle10)) {
+                                unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
                             }
 
                         }
@@ -318,48 +316,48 @@ class ParticleForm {
 
                             $this->getMain()->particle6[] = $name;
 
-                            if(in_array($name, $this->main->particle1)) {
-                                unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-                            } elseif(in_array($name, $this->main->particle2)) {
-                                unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-                            } elseif(in_array($name, $this->main->particle3)) {
-                                unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-                            } elseif(in_array($name, $this->main->particle4)) {
-                                unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                            } elseif(in_array($name, $this->main->particle5)) {
-                                unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-                            } elseif(in_array($name, $this->main->particle7)) {
-                                unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-                            } elseif(in_array($name, $this->main->particle8)) {
-                                unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-                            } elseif(in_array($name, $this->main->particle9)) {
-                                unset($this->main->particle9[array_search($name, $this->main->particle9)]);
-                            } elseif(in_array($name, $this->main->particle10)) {
-                                unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+                            if (in_array($name, $this->plugin->particle1)) {
+                                unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+                            } elseif (in_array($name, $this->plugin->particle2)) {
+                                unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+                            } elseif (in_array($name, $this->plugin->particle3)) {
+                                unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+                            } elseif (in_array($name, $this->plugin->particle4)) {
+                                unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                            } elseif (in_array($name, $this->plugin->particle5)) {
+                                unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+                            } elseif (in_array($name, $this->plugin->particle7)) {
+                                unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+                            } elseif (in_array($name, $this->plugin->particle8)) {
+                                unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+                            } elseif (in_array($name, $this->plugin->particle9)) {
+                                unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
+                            } elseif (in_array($name, $this->plugin->particle10)) {
+                                unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
                             }
 
                         } else {
 
-                            if(in_array($name, $this->main->particle1)) {
-                                unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-                            } elseif(in_array($name, $this->main->particle2)) {
-                                unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-                            } elseif(in_array($name, $this->main->particle3)) {
-                                unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-                            } elseif(in_array($name, $this->main->particle4)) {
-                                unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                            } elseif(in_array($name, $this->main->particle5)) {
-                                unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-                            } elseif(in_array($name, $this->main->particle6)) {
-                                unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-                            } elseif(in_array($name, $this->main->particle7)) {
-                                unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-                            } elseif(in_array($name, $this->main->particle8)) {
-                                unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-                            } elseif(in_array($name, $this->main->particle9)) {
-                                unset($this->main->particle9[array_search($name, $this->main->particle9)]);
-                            } elseif(in_array($name, $this->main->particle10)) {
-                                unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+                            if (in_array($name, $this->plugin->particle1)) {
+                                unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+                            } elseif (in_array($name, $this->plugin->particle2)) {
+                                unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+                            } elseif (in_array($name, $this->plugin->particle3)) {
+                                unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+                            } elseif (in_array($name, $this->plugin->particle4)) {
+                                unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                            } elseif (in_array($name, $this->plugin->particle5)) {
+                                unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+                            } elseif (in_array($name, $this->plugin->particle6)) {
+                                unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+                            } elseif (in_array($name, $this->plugin->particle7)) {
+                                unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+                            } elseif (in_array($name, $this->plugin->particle8)) {
+                                unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+                            } elseif (in_array($name, $this->plugin->particle9)) {
+                                unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
+                            } elseif (in_array($name, $this->plugin->particle10)) {
+                                unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
                             }
 
                         } 
@@ -374,48 +372,48 @@ class ParticleForm {
 
                             $this->getMain()->particle7[] = $name;
 
-                            if(in_array($name, $this->main->particle1)) {
-                                unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-                            } elseif(in_array($name, $this->main->particle2)) {
-                                unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-                            } elseif(in_array($name, $this->main->particle3)) {
-                                unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-                            } elseif(in_array($name, $this->main->particle4)) {
-                                unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                            } elseif(in_array($name, $this->main->particle5)) {
-                                unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-                            } elseif(in_array($name, $this->main->particle6)) {
-                                unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-                            } elseif(in_array($name, $this->main->particle8)) {
-                                unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-                            } elseif(in_array($name, $this->main->particle9)) {
-                                unset($this->main->particle9[array_search($name, $this->main->particle9)]);
-                            } elseif(in_array($name, $this->main->particle10)) {
-                                unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+                            if (in_array($name, $this->plugin->particle1)) {
+                                unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+                            } elseif (in_array($name, $this->plugin->particle2)) {
+                                unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+                            } elseif (in_array($name, $this->plugin->particle3)) {
+                                unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+                            } elseif (in_array($name, $this->plugin->particle4)) {
+                                unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                            } elseif (in_array($name, $this->plugin->particle5)) {
+                                unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+                            } elseif (in_array($name, $this->plugin->particle6)) {
+                                unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+                            } elseif (in_array($name, $this->plugin->particle8)) {
+                                unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+                            } elseif (in_array($name, $this->plugin->particle9)) {
+                                unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
+                            } elseif (in_array($name, $this->plugin->particle10)) {
+                                unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
                             }
 
                         } else {
 
-                            if(in_array($name, $this->main->particle1)) {
-                                unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-                            } elseif(in_array($name, $this->main->particle2)) {
-                                unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-                            } elseif(in_array($name, $this->main->particle3)) {
-                                unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-                            } elseif(in_array($name, $this->main->particle4)) {
-                                unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                            } elseif(in_array($name, $this->main->particle5)) {
-                                unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-                            } elseif(in_array($name, $this->main->particle6)) {
-                                unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-                            } elseif(in_array($name, $this->main->particle7)) {
-                                unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-                            } elseif(in_array($name, $this->main->particle8)) {
-                                unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-                            } elseif(in_array($name, $this->main->particle9)) {
-                                unset($this->main->particle9[array_search($name, $this->main->particle9)]);
-                            } elseif(in_array($name, $this->main->particle10)) {
-                                unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+                            if (in_array($name, $this->plugin->particle1)) {
+                                unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+                            } elseif (in_array($name, $this->plugin->particle2)) {
+                                unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+                            } elseif (in_array($name, $this->plugin->particle3)) {
+                                unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+                            } elseif (in_array($name, $this->plugin->particle4)) {
+                                unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                            } elseif (in_array($name, $this->plugin->particle5)) {
+                                unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+                            } elseif (in_array($name, $this->plugin->particle6)) {
+                                unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+                            } elseif (in_array($name, $this->plugin->particle7)) {
+                                unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+                            } elseif (in_array($name, $this->plugin->particle8)) {
+                                unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+                            } elseif (in_array($name, $this->plugin->particle9)) {
+                                unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
+                            } elseif (in_array($name, $this->plugin->particle10)) {
+                                unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
                             }
 
                         }
@@ -430,48 +428,48 @@ class ParticleForm {
 
                             $this->getMain()->particle8[] = $name;
 
-                            if(in_array($name, $this->main->particle1)) {
-                                unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-                            } elseif(in_array($name, $this->main->particle2)) {
-                                unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-                            } elseif(in_array($name, $this->main->particle3)) {
-                                unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-                            } elseif(in_array($name, $this->main->particle4)) {
-                                unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                            } elseif(in_array($name, $this->main->particle5)) {
-                                unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-                            } elseif(in_array($name, $this->main->particle6)) {
-                                unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-                            } elseif(in_array($name, $this->main->particle7)) {
-                                unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-                            } elseif(in_array($name, $this->main->particle9)) {
-                                unset($this->main->particle9[array_search($name, $this->main->particle9)]);
-                            } elseif(in_array($name, $this->main->particle10)) {
-                                unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+                            if (in_array($name, $this->plugin->particle1)) {
+                                unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+                            } elseif (in_array($name, $this->plugin->particle2)) {
+                                unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+                            } elseif (in_array($name, $this->plugin->particle3)) {
+                                unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+                            } elseif (in_array($name, $this->plugin->particle4)) {
+                                unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                            } elseif (in_array($name, $this->plugin->particle5)) {
+                                unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+                            } elseif (in_array($name, $this->plugin->particle6)) {
+                                unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+                            } elseif (in_array($name, $this->plugin->particle7)) {
+                                unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+                            } elseif (in_array($name, $this->plugin->particle9)) {
+                                unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
+                            } elseif (in_array($name, $this->plugin->particle10)) {
+                                unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
                             }
 
                         } else {
 
-                            if(in_array($name, $this->main->particle1)) {
-                                unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-                            } elseif(in_array($name, $this->main->particle2)) {
-                                unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-                            } elseif(in_array($name, $this->main->particle3)) {
-                                unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-                            } elseif(in_array($name, $this->main->particle4)) {
-                                unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                            } elseif(in_array($name, $this->main->particle5)) {
-                                unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-                            } elseif(in_array($name, $this->main->particle6)) {
-                                unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-                            } elseif(in_array($name, $this->main->particle7)) {
-                                unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-                            } elseif(in_array($name, $this->main->particle8)) {
-                                unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-                            } elseif(in_array($name, $this->main->particle9)) {
-                                unset($this->main->particle9[array_search($name, $this->main->particle9)]);
-                            } elseif(in_array($name, $this->main->particle10)) {
-                                unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+                            if (in_array($name, $this->plugin->particle1)) {
+                                unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+                            } elseif (in_array($name, $this->plugin->particle2)) {
+                                unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+                            } elseif (in_array($name, $this->plugin->particle3)) {
+                                unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+                            } elseif (in_array($name, $this->plugin->particle4)) {
+                                unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                            } elseif (in_array($name, $this->plugin->particle5)) {
+                                unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+                            } elseif (in_array($name, $this->plugin->particle6)) {
+                                unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+                            } elseif (in_array($name, $this->plugin->particle7)) {
+                                unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+                            } elseif (in_array($name, $this->plugin->particle8)) {
+                                unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+                            } elseif (in_array($name, $this->plugin->particle9)) {
+                                unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
+                            } elseif (in_array($name, $this->plugin->particle10)) {
+                                unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
                             }
 
                         }
@@ -486,48 +484,48 @@ class ParticleForm {
 
                             $this->getMain()->particle9[] = $name;
 
-                            if(in_array($name, $this->main->particle1)) {
-                                unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-                            } elseif(in_array($name, $this->main->particle2)) {
-                                unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-                            } elseif(in_array($name, $this->main->particle3)) {
-                                unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-                            } elseif(in_array($name, $this->main->particle4)) {
-                                unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                            } elseif(in_array($name, $this->main->particle5)) {
-                                unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-                            } elseif(in_array($name, $this->main->particle6)) {
-                                unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-                            } elseif(in_array($name, $this->main->particle7)) {
-                                unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-                            } elseif(in_array($name, $this->main->particle8)) {
-                                unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-                            } elseif(in_array($name, $this->main->particle10)) {
-                                unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+                            if (in_array($name, $this->plugin->particle1)) {
+                                unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+                            } elseif (in_array($name, $this->plugin->particle2)) {
+                                unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+                            } elseif (in_array($name, $this->plugin->particle3)) {
+                                unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+                            } elseif (in_array($name, $this->plugin->particle4)) {
+                                unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                            } elseif (in_array($name, $this->plugin->particle5)) {
+                                unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+                            } elseif (in_array($name, $this->plugin->particle6)) {
+                                unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+                            } elseif (in_array($name, $this->plugin->particle7)) {
+                                unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+                            } elseif (in_array($name, $this->plugin->particle8)) {
+                                unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+                            } elseif (in_array($name, $this->plugin->particle10)) {
+                                unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
                             }
 
                         } else {
 
-                            if(in_array($name, $this->main->particle1)) {
-                                unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-                            } elseif(in_array($name, $this->main->particle2)) {
-                                unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-                            } elseif(in_array($name, $this->main->particle3)) {
-                                unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-                            } elseif(in_array($name, $this->main->particle4)) {
-                                unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                            } elseif(in_array($name, $this->main->particle5)) {
-                                unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-                            } elseif(in_array($name, $this->main->particle6)) {
-                                unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-                            } elseif(in_array($name, $this->main->particle7)) {
-                                unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-                            } elseif(in_array($name, $this->main->particle8)) {
-                                unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-                            } elseif(in_array($name, $this->main->particle9)) {
-                                unset($this->main->particle9[array_search($name, $this->main->particle9)]);
-                            } elseif(in_array($name, $this->main->particle10)) {
-                                unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+                            if (in_array($name, $this->plugin->particle1)) {
+                                unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+                            } elseif (in_array($name, $this->plugin->particle2)) {
+                                unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+                            } elseif (in_array($name, $this->plugin->particle3)) {
+                                unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+                            } elseif (in_array($name, $this->plugin->particle4)) {
+                                unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                            } elseif (in_array($name, $this->plugin->particle5)) {
+                                unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+                            } elseif (in_array($name, $this->plugin->particle6)) {
+                                unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+                            } elseif (in_array($name, $this->plugin->particle7)) {
+                                unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+                            } elseif (in_array($name, $this->plugin->particle8)) {
+                                unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+                            } elseif (in_array($name, $this->plugin->particle9)) {
+                                unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
+                            } elseif (in_array($name, $this->plugin->particle10)) {
+                                unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
                             }
 
                         }
@@ -542,48 +540,48 @@ class ParticleForm {
 
                             $this->getMain()->particle10[] = $name;
 
-                            if(in_array($name, $this->main->particle1)) {
-                                unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-                            } elseif(in_array($name, $this->main->particle2)) {
-                                unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-                            } elseif(in_array($name, $this->main->particle3)) {
-                                unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-                            } elseif(in_array($name, $this->main->particle4)) {
-                                unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                            } elseif(in_array($name, $this->main->particle5)) {
-                                unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-                            } elseif(in_array($name, $this->main->particle6)) {
-                                unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-                            } elseif(in_array($name, $this->main->particle7)) {
-                                unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-                            } elseif(in_array($name, $this->main->particle8)) {
-                                unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-                            } elseif(in_array($name, $this->main->particle9)) {
-                                unset($this->main->particle9[array_search($name, $this->main->particle9)]);
+                            if (in_array($name, $this->plugin->particle1)) {
+                                unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+                            } elseif (in_array($name, $this->plugin->particle2)) {
+                                unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+                            } elseif (in_array($name, $this->plugin->particle3)) {
+                                unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+                            } elseif (in_array($name, $this->plugin->particle4)) {
+                                unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                            } elseif (in_array($name, $this->plugin->particle5)) {
+                                unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+                            } elseif (in_array($name, $this->plugin->particle6)) {
+                                unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+                            } elseif (in_array($name, $this->plugin->particle7)) {
+                                unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+                            } elseif (in_array($name, $this->plugin->particle8)) {
+                                unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+                            } elseif (in_array($name, $this->plugin->particle9)) {
+                                unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
                             }
 
                         } else {
 
-                            if(in_array($name, $this->main->particle1)) {
-                                unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-                            } elseif(in_array($name, $this->main->particle2)) {
-                                unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-                            } elseif(in_array($name, $this->main->particle3)) {
-                                unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-                            } elseif(in_array($name, $this->main->particle4)) {
-                                unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                            } elseif(in_array($name, $this->main->particle5)) {
-                                unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-                            } elseif(in_array($name, $this->main->particle6)) {
-                                unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-                            } elseif(in_array($name, $this->main->particle7)) {
-                                unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-                            } elseif(in_array($name, $this->main->particle8)) {
-                                unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-                            } elseif(in_array($name, $this->main->particle9)) {
-                                unset($this->main->particle9[array_search($name, $this->main->particle9)]);
-                            } elseif(in_array($name, $this->main->particle10)) {
-                                unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+                            if (in_array($name, $this->plugin->particle1)) {
+                                unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+                            } elseif (in_array($name, $this->plugin->particle2)) {
+                                unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+                            } elseif (in_array($name, $this->plugin->particle3)) {
+                                unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+                            } elseif (in_array($name, $this->plugin->particle4)) {
+                                unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                            } elseif (in_array($name, $this->plugin->particle5)) {
+                                unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+                            } elseif (in_array($name, $this->plugin->particle6)) {
+                                unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+                            } elseif (in_array($name, $this->plugin->particle7)) {
+                                unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+                            } elseif (in_array($name, $this->plugin->particle8)) {
+                                unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+                            } elseif (in_array($name, $this->plugin->particle9)) {
+                                unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
+                            } elseif (in_array($name, $this->plugin->particle10)) {
+                                unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
                             }
 
                         }
@@ -592,29 +590,29 @@ class ParticleForm {
 
                 case 10:
                     $name = $player->getName();
-                    
-                    if(in_array($name, $this->main->particle1)) {
-                        unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-                    } elseif(in_array($name, $this->main->particle2)) {
-                        unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-                    } elseif(in_array($name, $this->main->particle3)) {
-                        unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-                    } elseif(in_array($name, $this->main->particle4)) {
-                        unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-                    } elseif(in_array($name, $this->main->particle5)) {
-                        unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-                    } elseif(in_array($name, $this->main->particle6)) {
-                        unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-                    } elseif(in_array($name, $this->main->particle7)) {
-                        unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-                    } elseif(in_array($name, $this->main->particle8)) {
-                        unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-                    } elseif(in_array($name, $this->main->particle9)) {
-                        unset($this->main->particle9[array_search($name, $this->main->particle9)]);
-                    } elseif(in_array($name, $this->main->particle10)) {
-                        unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+
+                    if (in_array($name, $this->plugin->particle1)) {
+                        unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+                    } elseif (in_array($name, $this->plugin->particle2)) {
+                        unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+                    } elseif (in_array($name, $this->plugin->particle3)) {
+                        unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+                    } elseif (in_array($name, $this->plugin->particle4)) {
+                        unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+                    } elseif (in_array($name, $this->plugin->particle5)) {
+                        unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+                    } elseif (in_array($name, $this->plugin->particle6)) {
+                        unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+                    } elseif (in_array($name, $this->plugin->particle7)) {
+                        unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+                    } elseif (in_array($name, $this->plugin->particle8)) {
+                        unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+                    } elseif (in_array($name, $this->plugin->particle9)) {
+                        unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
+                    } elseif (in_array($name, $this->plugin->particle10)) {
+                        unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
                     }
-                break;
+                    break;
 
                 case 11:
                     $this->getMain()->getForms()->menuForm($player);
@@ -640,8 +638,9 @@ class ParticleForm {
         return $form;
     }
 
-    function getMain() : Main {
-        return $this->main;
+    function getMain(): CosmeticMenu
+    {
+        return $this->plugin;
     }
 
 }

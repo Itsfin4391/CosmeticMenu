@@ -2,42 +2,8 @@
 
 namespace NinjaKnights\CosmeticMenu;
 
-use pocketmine\plugin\PluginBase;
-use pocketmine\Player;
-use pocketmine\Server;
-use pocketmine\event\Listener;
-use pocketmine\event\player\PlayerJoinEvent;
-use pocketmine\event\player\PlayerQuitEvent;
-
-use pocketmine\command\CommandSender;
-use pocketmine\command\Command;
-
-use pocketmine\block\Block;
-use pocketmine\level\Level;
-use pocketmine\level\Position;
-use pocketmine\level\Location;
-use pocketmine\item\Item;
-use pocketmine\item\ItemIds;
-use pocketmine\inventory\PlayerInventory;
-use pocketmine\event\player\PlayerInteractEvent;
-use pocketmine\event\inventory\InventoryTransactionEvent;
-use pocketmine\inventory\transaction\action\{SlotChangeAction,DropItemAction};
-
-use pocketmine\utils\Config;
-
-use NinjaKnights\CosmeticMenu\forms\MainForm;
-use NinjaKnights\CosmeticMenu\forms\GadgetForm;
-use NinjaKnights\CosmeticMenu\forms\ParticleForm;
-use NinjaKnights\CosmeticMenu\forms\MorphForm;
-use NinjaKnights\CosmeticMenu\forms\TrailForm;
-use NinjaKnights\CosmeticMenu\forms\SuitForm;
-
-use NinjaKnights\CosmeticMenu\EventListener;
-use NinjaKnights\CosmeticMenu\Cooldown;
-
 use NinjaKnights\CosmeticMenu\cosmetics\Gadgets\GadgetsEvents;
 use NinjaKnights\CosmeticMenu\cosmetics\Gadgets\TNTLauncher;
-
 use NinjaKnights\CosmeticMenu\cosmetics\Particles\BlizzardAura;
 use NinjaKnights\CosmeticMenu\cosmetics\Particles\BloodHelix;
 use NinjaKnights\CosmeticMenu\cosmetics\Particles\BulletHelix;
@@ -47,26 +13,36 @@ use NinjaKnights\CosmeticMenu\cosmetics\Particles\EmeraldTwirl;
 use NinjaKnights\CosmeticMenu\cosmetics\Particles\FlameRings;
 use NinjaKnights\CosmeticMenu\cosmetics\Particles\RainCloud;
 use NinjaKnights\CosmeticMenu\cosmetics\Particles\WitchCurse;
-
+use NinjaKnights\CosmeticMenu\cosmetics\Suits\Frog;
+use NinjaKnights\CosmeticMenu\cosmetics\Suits\Youtube;
 use NinjaKnights\CosmeticMenu\cosmetics\Trails\Flames;
-use NinjaKnights\CosmeticMenu\cosmetics\Trails\Snow;
 use NinjaKnights\CosmeticMenu\cosmetics\Trails\Heart;
 use NinjaKnights\CosmeticMenu\cosmetics\Trails\Smoke;
+use NinjaKnights\CosmeticMenu\cosmetics\Trails\Snow;
+use NinjaKnights\CosmeticMenu\forms\GadgetForm;
+use NinjaKnights\CosmeticMenu\forms\MainForm;
+use NinjaKnights\CosmeticMenu\forms\MorphForm;
+use NinjaKnights\CosmeticMenu\forms\ParticleForm;
+use NinjaKnights\CosmeticMenu\forms\SuitForm;
+use NinjaKnights\CosmeticMenu\forms\TrailForm;
+use pocketmine\command\Command;
+use pocketmine\command\CommandSender;
+use pocketmine\event\Listener;
+use pocketmine\plugin\PluginBase;
+use pocketmine\utils\Config;
 
-use NinjaKnights\CosmeticMenu\cosmetics\Suits\Youtube;
-use NinjaKnights\CosmeticMenu\cosmetics\Suits\Frog;
+class CosmeticMenu extends PluginBase implements Listener
+{
 
-class Main extends PluginBase implements Listener {
-
-	public $world;
+    public $world;
     /**
      * @var Forms
      */
-	private $forms;
-	private $gadgets;
-	private $particles;
-	private $morphs;
-	private $trails;
+    private $forms;
+    private $gadgets;
+    private $particles;
+    private $morphs;
+    private $trails;
 	private $suits;
 
 	public $tntCooldown = [ ];
@@ -85,25 +61,57 @@ class Main extends PluginBase implements Listener {
     public $particle7 = array("Witch Curse");
     public $particle8 = array("Blood Helix");
     public $particle9 = array("Emerald Twril");
-	public $particle10 = array("Test");
-	
-	public $trail1 = array("Flame Trail");
-	public $trail2 = array("Snow Trail");
-	public $trail3 = array("Heart Trail");
-	public $trail4 = array("Smoke Trail ");
-	
-	public $suit1 = array("Suit");
-	public $suit2 = array("Suit");
+    public $particle10 = array("Test");
 
-    public function onEnable() {
-		$this->getServer()->getPluginManager()->registerEvents($this,$this);
-		$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
-		$this->getServer()->getPluginManager()->registerEvents(new GadgetsEvents($this), $this);
-		$this->getServer()->getPluginManager()->registerEvents(new TNTLauncher($this), $this);
-		$this->getScheduler()->scheduleRepeatingTask(new BlizzardAura($this), 3);
-		$this->getScheduler()->scheduleRepeatingTask(new BloodHelix($this), 3);
-		$this->getScheduler()->scheduleRepeatingTask(new BulletHelix($this), 3);
-		$this->getScheduler()->scheduleRepeatingTask(new ConduitHalo($this), 3);
+    public $trail1 = array("Flame Trail");
+    public $trail2 = array("Snow Trail");
+    public $trail3 = array("Heart Trail");
+    public $trail4 = array("Smoke Trail ");
+
+    public $suit1 = array("Suit");
+    public $suit2 = array("Suit");
+
+    /** @var Config */
+    private $config;
+    /**
+     * @var bool
+     */
+    private $cosmeticItemSupport;
+    /**
+     * @var string
+     */
+    private $pluginVersion;
+    /**
+     * @var mixed|string|string[]|null
+     */
+    private $cosmeticName;
+    /**
+     * @var array
+     */
+    private $cosmeticDes;
+    /**
+     * @var mixed|null
+     */
+    private $cosmeticForceSlot;
+    /**
+     * @var mixed|null
+     */
+    private $cosmeticItemType;
+    /**
+     * @var bool
+     */
+    private $cosmeticCommandSupport;
+
+    public function onEnable()
+    {
+        $this->getServer()->getPluginManager()->registerEvents($this, $this);
+        $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
+        $this->getServer()->getPluginManager()->registerEvents(new GadgetsEvents($this), $this);
+        $this->getServer()->getPluginManager()->registerEvents(new TNTLauncher($this), $this);
+        $this->getScheduler()->scheduleRepeatingTask(new BlizzardAura($this), 3);
+        $this->getScheduler()->scheduleRepeatingTask(new BloodHelix($this), 3);
+        $this->getScheduler()->scheduleRepeatingTask(new BulletHelix($this), 3);
+        $this->getScheduler()->scheduleRepeatingTask(new ConduitHalo($this), 3);
 		$this->getScheduler()->scheduleRepeatingTask(new CupidsLove($this), 3);
 		$this->getScheduler()->scheduleRepeatingTask(new EmeraldTwirl($this), 3);
 		$this->getScheduler()->scheduleRepeatingTask(new FlameRings($this), 3);
@@ -171,38 +179,108 @@ class Main extends PluginBase implements Listener {
 			case "cosmetics":
 				if($sender->hasPermission("cosmetic.cmd")){
 					if($this->cosmeticCommandSupport){
-						$this->getForms()->menuForm($sender);
-					}
-				} else {
-					$sender->sendMessage("You don't have permission to use this command.");
-				}
-            break;
+                        $this->getForms()->menuForm($sender);
+                    }
+                } else {
+                    $sender->sendMessage("You don't have permission to use this command.");
+                }
+                break;
         }
         return true;
     }
 
-	function getMain() : Main {
+    function getMain(): CosmeticMenu
+    {
         return $this;
-	}
-	
-	function getForms() : MainForm {
+    }
+
+    function getConfig(): Config
+    {
+        return $this->config;
+    }
+
+    function getForms(): MainForm
+    {
         return $this->forms;
-	}
-	
-	function getGadgets() : GadgetForm {
+    }
+
+    function getGadgets(): GadgetForm
+    {
         return $this->gadgets;
-	}
-	function getParticles() : ParticleForm {
+    }
+
+    function getParticles(): ParticleForm
+    {
         return $this->particles;
-	}
-	function getMorphs() : MorphForm {
+    }
+
+    function getMorphs(): MorphForm
+    {
         return $this->morphs;
-	}
-	function getTrails() : TrailForm {
+    }
+
+    function getTrails(): TrailForm
+    {
         return $this->trails;
-	}
-	function getSuits() : SuitForm {
+    }
+
+    function getSuits(): SuitForm
+    {
         return $this->suits;
     }
+
+    public function getCosmeticItemSupport(): bool
+    {
+        return $this->cosmeticItemSupport;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPluginVersion(): string
+    {
+        return $this->pluginVersion;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCosmeticName(): string
+    {
+        return $this->cosmeticName;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCosmeticDes(): array
+    {
+        return $this->cosmeticDes;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCosmeticForceSlot(): int
+    {
+        return $this->cosmeticForceSlot;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCosmeticItemType(): string
+    {
+        return $this->cosmeticItemType;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCosmeticCommandSupport(): bool
+    {
+        return $this->cosmeticCommandSupport;
+    }
+
 
 }

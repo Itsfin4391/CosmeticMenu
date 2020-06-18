@@ -2,103 +2,90 @@
 
 namespace NinjaKnights\CosmeticMenu;
 
-use pocketmine\plugin\PluginBase;
-use pocketmine\Player;
-use pocketmine\Server;
+use pocketmine\event\inventory\InventoryTransactionEvent;
 use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
-use pocketmine\event\player\PlayerDeathEvent;
-use pocketmine\event\player\PlayerMoveEvent;
-use pocketmine\event\player\PlayerRespawnEvent; 
-use pocketmine\event\player\PlayerDropItemEvent;
-use pocketmine\event\player\PlayerExhaustEvent;
-use pocketmine\event\entity\EntityLevelChangeEvent;
-use pocketmine\event\inventory\InventoryPickupItemEvent;
-
-use pocketmine\block\Block;
-use pocketmine\level\Level;
-use pocketmine\item\Item;
-use pocketmine\item\ItemFactory;
-use pocketmine\item\ItemIds;
-use pocketmine\inventory\PlayerInventory;
-use pocketmine\event\player\PlayerInteractEvent;
-use pocketmine\event\inventory\InventoryTransactionEvent;
+use pocketmine\event\player\PlayerRespawnEvent;
 use pocketmine\inventory\transaction\action\DropItemAction;
 use pocketmine\inventory\transaction\action\SlotChangeAction;
-use pocketmine\entity\Effect;
-use pocketmine\entity\EffectInstance;
+use pocketmine\item\Item;
+use pocketmine\item\ItemFactory;
+use pocketmine\Player;
 
-use NinjaKnights\CosmeticMenu\forms\MainForm;
-use NinjaKnights\CosmeticMenu\Main;
+class EventListener implements Listener
+{
 
-class EventListener implements Listener {
+    private $plugin;
 
-    private $main;
-
-    public function __construct(Main $main) {
-		  $this->main = $main;
+    public function __construct(CosmeticMenu $plugin)
+    {
+        $this->plugin = $plugin;
     }
 
-	private function cosmeticItem(Item $item) : bool{
-        if($this->main->cosmeticItemSupport){
-            if($item->getCustomName() == $this->main->cosmeticName && $item->getId() == $this->main->cosmeticItemType && $item->getLore() == $this->main->cosmeticDes){
+    private function cosmeticItem(Item $item): bool
+    {
+        if ($this->plugin->getCosmeticItemSupport()) {
+            if ($item->getCustomName() == $this->plugin->getCosmeticName() && $item->getId() == $this->plugin->getCosmeticItemType() && $item->getLore() == $this->plugin->getCosmeticDes()) {
                 return true;
             }
             $in = $item->getCustomName();
-            if($in == "TNT-Launcher" || $in == "Lightning Stick" || $in == "Leaper" || $in == "§l§8<< Back") {
+            if ($in == "TNT-Launcher" || $in == "Lightning Stick" || $in == "Leaper" || $in == "§l§8<< Back") {
                 return true;
             }
         }
         return false;
     }
 
-	public function onJoin(PlayerJoinEvent $event){
-        if($this->main->cosmeticItemSupport){
-			$world = $this->main->config->get("WorldName");
-			$this->main->reloadConfig();
+	public function onJoin(PlayerJoinEvent $event)
+    {
+        if ($this->plugin->getCosmeticItemSupport()) {
+            $world = $this->plugin->getConfig()->get("WorldName");
+            $this->plugin->reloadConfig();
 
             $player = $event->getPlayer();
-            $air = Item::get(0, 0 , 1);
-            $item = Item::get($this->main->cosmeticItemType);
-            $item->setCustomName($this->main->cosmeticName);
-            $item->setLore($this->main->cosmeticDes);
-			$slot = $this->main->config->getNested("Cosmetic.Slot");
-			if($this->main->getServer()->getLevelByName($world)) {
-                $player->getInventory()->setItem($slot+1,$air,true);
-                $player->getInventory()->setItem($slot,$item,true);
-			} else {
-				$player->getInventory()->setItem($slot,$item,false);
-			}
+            $air = Item::get(0, 0, 1);
+            $item = Item::get($this->plugin->getCosmeticItemType());
+            $item->setCustomName($this->plugin->getCosmeticName());
+            $item->setLore($this->plugin->getCosmeticDes());
+            $slot = $this->plugin->getConfig()->getNested("Cosmetic.Slot");
+            if ($this->plugin->getServer()->getLevelByName($world)) {
+                $player->getInventory()->setItem($slot + 1, $air, true);
+                $player->getInventory()->setItem($slot, $item, true);
+            } else {
+                $player->getInventory()->setItem($slot, $item, false);
+            }
         }
     }
 
-    public function onRespawn(PlayerRespawnEvent $event){
-        if($this->main->cosmeticItemSupport){
-			$world = $this->main->config->get("WorldName");
-			$this->main->reloadConfig();
+    public function onRespawn(PlayerRespawnEvent $event)
+    {
+        if ($this->plugin->getCosmeticItemSupport()) {
+            $world = $this->plugin->getConfig()->get("WorldName");
+            $this->plugin->reloadConfig();
 
             $player = $event->getPlayer();
-            $air = Item::get(0, 0 , 1);
-            $item = Item::get($this->main->cosmeticItemType);
-            $item->setCustomName($this->main->cosmeticName);
-            $item->setLore($this->main->cosmeticDes);
-			$slot = $this->main->config->getNested("Cosmetic.Slot");
-			if($this->main->getServer()->getLevelByName($world)) {
-                $player->getInventory()->setItem($slot+1,$air,true);
-                $player->getInventory()->setItem($slot,$item,true);
-			} else {
-				$player->getInventory()->setItem($slot,$item,false);
-			}
+            $air = Item::get(0, 0, 1);
+            $item = Item::get($this->plugin->getCosmeticItemType());
+            $item->setCustomName($this->plugin->getCosmeticName());
+            $item->setLore($this->plugin->getCosmeticDes());
+            $slot = $this->plugin->getConfig()->getNested("Cosmetic.Slot");
+            if ($this->plugin->getServer()->getLevelByName($world)) {
+                $player->getInventory()->setItem($slot + 1, $air, true);
+                $player->getInventory()->setItem($slot, $item, true);
+            } else {
+                $player->getInventory()->setItem($slot, $item, false);
+            }
         }
 	}
 
     public function onQuit(PlayerQuitEvent $event){
-        if($this->main->cosmeticItemSupport){
+        if ($this->plugin->getCosmeticItemSupport()) {
             $player = $event->getPlayer();
-            $item = Item::get($this->main->cosmeticItemType);
-            $item->getCustomName($this->main->cosmeticName);
-            $item->getLore($this->main->cosmeticDes);
+            $item = Item::get($this->plugin->getCosmeticItemType());
+            $item->getCustomName($this->plugin->getCosmeticName());
+            $item->getLore($this->plugin->getCosmeticDes());
             $player->getInventory()->removeItem($item);
         }
         $name = $player->getName();
@@ -112,55 +99,55 @@ class EventListener implements Listener {
             ItemFactory::get(Item::AIR)
         ];
         $player->getArmorInventory()->setContents($armors);
-        if(in_array($name, $this->main->suit1)) {
-            unset($this->main->suit1[array_search($name, $this->main->suit1)]);
-        }elseif(in_array($name, $this->main->suit2)) {
-            unset($this->main->suit2[array_search($name, $this->main->suit2)]);
+        if (in_array($name, $this->plugin->suit1)) {
+            unset($this->plugin->suit1[array_search($name, $this->plugin->suit1)]);
+        } elseif (in_array($name, $this->plugin->suit2)) {
+            unset($this->plugin->suit2[array_search($name, $this->plugin->suit2)]);
         }
 
         //Particles          
-        if(in_array($name, $this->main->particle1)) {
-            unset($this->main->particle1[array_search($name, $this->main->particle1)]);
-        } elseif(in_array($name, $this->main->particle2)) {
-            unset($this->main->particle2[array_search($name, $this->main->particle2)]);
-        } elseif(in_array($name, $this->main->particle3)) {
-            unset($this->main->particle3[array_search($name, $this->main->particle3)]);
-        } elseif(in_array($name, $this->main->particle4)) {
-            unset($this->main->particle4[array_search($name, $this->main->particle4)]);
-        } elseif(in_array($name, $this->main->particle5)) {
-            unset($this->main->particle5[array_search($name, $this->main->particle5)]);
-        } elseif(in_array($name, $this->main->particle6)) {
-            unset($this->main->particle6[array_search($name, $this->main->particle6)]);
-        } elseif(in_array($name, $this->main->particle7)) {
-            unset($this->main->particle7[array_search($name, $this->main->particle7)]);
-        } elseif(in_array($name, $this->main->particle8)) {
-            unset($this->main->particle8[array_search($name, $this->main->particle8)]);
-        } elseif(in_array($name, $this->main->particle9)) {
-            unset($this->main->particle9[array_search($name, $this->main->particle9)]);
-        } elseif(in_array($name, $this->main->particle10)) {
-            unset($this->main->particle10[array_search($name, $this->main->particle10)]);
+        if (in_array($name, $this->plugin->particle1)) {
+            unset($this->plugin->particle1[array_search($name, $this->plugin->particle1)]);
+        } elseif (in_array($name, $this->plugin->particle2)) {
+            unset($this->plugin->particle2[array_search($name, $this->plugin->particle2)]);
+        } elseif (in_array($name, $this->plugin->particle3)) {
+            unset($this->plugin->particle3[array_search($name, $this->plugin->particle3)]);
+        } elseif (in_array($name, $this->plugin->particle4)) {
+            unset($this->plugin->particle4[array_search($name, $this->plugin->particle4)]);
+        } elseif (in_array($name, $this->plugin->particle5)) {
+            unset($this->plugin->particle5[array_search($name, $this->plugin->particle5)]);
+        } elseif (in_array($name, $this->plugin->particle6)) {
+            unset($this->plugin->particle6[array_search($name, $this->plugin->particle6)]);
+        } elseif (in_array($name, $this->plugin->particle7)) {
+            unset($this->plugin->particle7[array_search($name, $this->plugin->particle7)]);
+        } elseif (in_array($name, $this->plugin->particle8)) {
+            unset($this->plugin->particle8[array_search($name, $this->plugin->particle8)]);
+        } elseif (in_array($name, $this->plugin->particle9)) {
+            unset($this->plugin->particle9[array_search($name, $this->plugin->particle9)]);
+        } elseif (in_array($name, $this->plugin->particle10)) {
+            unset($this->plugin->particle10[array_search($name, $this->plugin->particle10)]);
         }
 
         //Trails
-        if(in_array($name, $this->main->trail1)) {
-            unset($this->main->trail1[array_search($name, $this->main->trail1)]);
-        } elseif(in_array($name, $this->main->trail2)) {
-            unset($this->main->trail2[array_search($name, $this->main->trail2)]);
-        } elseif(in_array($name, $this->main->trail3)) {
-            unset($this->main->trail3[array_search($name, $this->main->trail3)]);
-        } elseif(in_array($name, $this->main->trail4)) {
-            unset($this->main->trail4[array_search($name, $this->main->trail4)]);
+        if (in_array($name, $this->plugin->trail1)) {
+            unset($this->plugin->trail1[array_search($name, $this->plugin->trail1)]);
+        } elseif (in_array($name, $this->plugin->trail2)) {
+            unset($this->plugin->trail2[array_search($name, $this->plugin->trail2)]);
+        } elseif (in_array($name, $this->plugin->trail3)) {
+            unset($this->plugin->trail3[array_search($name, $this->plugin->trail3)]);
+        } elseif (in_array($name, $this->plugin->trail4)) {
+            unset($this->plugin->trail4[array_search($name, $this->plugin->trail4)]);
         }
     }
 
     public function onInventoryTransaction(InventoryTransactionEvent $event){
-        if($this->main->cosmeticItemSupport && $this->main->cosmeticForceSlot){
+        if ($this->plugin->getCosmeticItemSupport() && $this->plugin->getCosmeticForceSlot()) {
             $transaction = $event->getTransaction();
-            foreach($transaction->getActions() as $action){
+            foreach ($transaction->getActions() as $action) {
                 $item = $action->getSourceItem();
                 $source = $transaction->getSource();
-                if($source instanceof Player && $this->cosmeticItem($item)){
-                    if($action instanceof SlotChangeAction || $action instanceof DropItemAction){
+                if ($source instanceof Player && $this->cosmeticItem($item)) {
+                    if ($action instanceof SlotChangeAction || $action instanceof DropItemAction) {
                         $event->setCancelled();
                     }
                 }
@@ -184,25 +171,26 @@ class EventListener implements Listener {
         //Back
         if($iname == "§l§4<< Back") {
 
-			$slot = $this->main->config->getNested("Cosmetic.Slot");
-            $item = Item::get(0, 0 , 1);
-            $inv->setItem($slot+1, $item);
+            $slot = $this->plugin->getConfig()->getNested("Cosmetic.Slot");
+            $item = Item::get(0, 0, 1);
+            $inv->setItem($slot + 1, $item);
 
-            $item1 = Item::get($this->main->cosmeticItemType);
-            $item1->setCustomName($this->main->cosmeticName);
-            $item1->setLore($this->main->cosmeticDes);
-			$player->getInventory()->setItem($slot,$item1,true);
+            $item1 = Item::get($this->plugin->getCosmeticItemType());
+            $item1->setCustomName($this->plugin->getCosmeticName());
+            $item1->setLore($this->plugin->getCosmeticDes());
+            $player->getInventory()->setItem($slot, $item1, true);
 
         }
 
-        if($this->main->cosmeticItemSupport){
-            if($item->getCustomName() == $this->main->cosmeticName && $item->getId() == $this->main->cosmeticItemType && $item->getLore() == $this->main->cosmeticDes){
+        if ($this->plugin->getCosmeticItemSupport()) {
+            if ($item->getCustomName() == $this->plugin->getCosmeticName() && $item->getId() == $this->plugin->getCosmeticItemType() && $item->getLore() == $this->plugin->getCosmeticDes()) {
                 $this->getMain()->getForms()->menuForm($player);
             }
         }
     }
-    
-    function getMain() : Main {
-        return $this->main;
+
+    function getMain(): CosmeticMenu
+    {
+        return $this->plugin;
     }
 }

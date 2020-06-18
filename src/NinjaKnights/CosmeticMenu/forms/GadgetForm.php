@@ -2,35 +2,34 @@
 
 namespace NinjaKnights\CosmeticMenu\forms;
     
-use NinjaKnights\CosmeticMenu\Main;
 use jojoe77777\FormAPI\SimpleForm;
-use pocketmine\Player;
-use pocketmine\Server;
-use pocketmine\level\Level;
+use NinjaKnights\CosmeticMenu\CosmeticMenu;
 use pocketmine\item\Item;
-use pocketmine\item\ItemIds;
-use pocketmine\inventory\PlayerInventory;
-    
-class GadgetForm {
-    
-    private $main;
+use pocketmine\Player;
 
-    public function __construct(Main $main){
-        $this->main = $main;
+class GadgetForm
+{
+
+    private $plugin;
+
+    public function __construct(CosmeticMenu $plugin)
+    {
+        $this->plugin = $plugin;
     }
 
-     public function openGadgets($player) {
+    public function openGadgets($player)
+    {
         $form = new SimpleForm(function (Player $player, $data) {
             $result = $data;
-            if($result === null) {
+            if ($result === null) {
                 return true;
             }
-            switch($result) {
+            switch ($result) {
                 case 0:
                     if($player->hasPermission("cosmetic.gadgets.tntlauncher")){
                         $inv = $player->getInventory();
-                        $slot = $this->main->config->getNested("Cosmetic.Slot");
-                        $air = Item::get(0, 0 , 1);
+                        $slot = $this->plugin->getConfig()->getNested("Cosmetic.Slot");
+                        $air = Item::get(0, 0, 1);
                         $inv->setItem($slot,$air,true);
 		
 		                $item = Item::get(352, 0, 1);
@@ -47,8 +46,8 @@ class GadgetForm {
                 case 1:
                     if($player->hasPermission("cosmetic.gadgets.lightningstick")){
                         $inv = $player->getInventory();
-                        $slot = $this->main->config->getNested("Cosmetic.Slot");
-                        $air = Item::get(0, 0 , 1);
+                        $slot = $this->plugin->getConfig()->getNested("Cosmetic.Slot");
+                        $air = Item::get(0, 0, 1);
                         $inv->setItem($slot,$air,true);
 		
                         $item = Item::get(369, 0, 1);
@@ -65,8 +64,8 @@ class GadgetForm {
                 case 2:
                     if($player->hasPermission("cosmetic.gadgets.leaper")){
                         $inv = $player->getInventory();
-                        $slot = $this->main->config->getNested("Cosmetic.Slot");
-                        $air = Item::get(0, 0 , 1);
+                        $slot = $this->plugin->getConfig()->getNested("Cosmetic.Slot");
+                        $air = Item::get(0, 0, 1);
                         $inv->setItem($slot,$air,true);
 		
 		                $item = Item::get(288, 0, 1);
@@ -85,7 +84,7 @@ class GadgetForm {
                 break;
             }
         });
-           
+
         $form->setTitle("Gadgets");
         $form->setContent("Pick One");
         $form->addButton("TNT-Launcher");
@@ -96,8 +95,9 @@ class GadgetForm {
         return $form;
     }
 
-     function getMain() : Main {
-        return $this->main;
+    function getMain(): CosmeticMenu
+    {
+        return $this->plugin;
     }
 
 }

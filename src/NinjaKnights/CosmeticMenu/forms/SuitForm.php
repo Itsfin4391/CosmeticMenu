@@ -2,30 +2,30 @@
 
 namespace NinjaKnights\CosmeticMenu\forms;
     
-use NinjaKnights\CosmeticMenu\Main;
 use jojoe77777\FormAPI\SimpleForm;
-use pocketmine\Player;
-use pocketmine\Server;
+use NinjaKnights\CosmeticMenu\CosmeticMenu;
 use pocketmine\item\Item;
 use pocketmine\item\ItemFactory;
-use pocketmine\entity\Effect;
-use pocketmine\entity\EffectInstance;
-    
-class SuitForm {
-    
-    private $main;
+use pocketmine\Player;
 
-    public function __construct(Main $main){
-        $this->main = $main;
+class SuitForm
+{
+
+    private $plugin;
+
+    public function __construct(CosmeticMenu $plugin)
+    {
+        $this->plugin = $plugin;
     }
 
-    public function openSuits($player) {
+    public function openSuits($player)
+    {
         $form = new SimpleForm(function (Player $player, $data) {
-        $result = $data;
-            if($result === null) {
+            $result = $data;
+            if ($result === null) {
                 return true;
             }
-            switch($result) {
+            switch ($result) {
                 //Youtube Suit
                 case 0:
                     if($player->hasPermission("cosmetic.suits.youtube")){
@@ -35,9 +35,9 @@ class SuitForm {
 
                             $player->removeAllEffects();
                             $this->getMain()->suit1[] = $name;
-                            
-                            if(in_array($name, $this->main->suit2)) {
-                                unset($this->main->suit2[array_search($name, $this->main->suit2)]);
+
+                            if (in_array($name, $this->plugin->suit2)) {
+                                unset($this->plugin->suit2[array_search($name, $this->plugin->suit2)]);
                             }
 
                         } else {
@@ -51,10 +51,10 @@ class SuitForm {
                             ];
 
                             $player->getArmorInventory()->setContents($armors);
-                            if(in_array($name, $this->main->suit1)) {
-                                unset($this->main->suit1[array_search($name, $this->main->suit1)]);
-                            }elseif(in_array($name, $this->main->suit2)) {
-                                unset($this->main->suit2[array_search($name, $this->main->suit2)]);
+                            if (in_array($name, $this->plugin->suit1)) {
+                                unset($this->plugin->suit1[array_search($name, $this->plugin->suit1)]);
+                            } elseif (in_array($name, $this->plugin->suit2)) {
+                                unset($this->plugin->suit2[array_search($name, $this->plugin->suit2)]);
                             }
 
                         }
@@ -70,9 +70,9 @@ class SuitForm {
 
                             $player->removeAllEffects();
                             $this->getMain()->suit2[] = $name;
-                            
-                            if(in_array($name, $this->main->suit1)) {
-                                unset($this->main->suit1[array_search($name, $this->main->suit1)]);
+
+                            if (in_array($name, $this->plugin->suit1)) {
+                                unset($this->plugin->suit1[array_search($name, $this->plugin->suit1)]);
                             }
 
                         } else {
@@ -86,10 +86,10 @@ class SuitForm {
                             ];
 
                             $player->getArmorInventory()->setContents($armors);
-                            if(in_array($name, $this->main->suit1)) {
-                                unset($this->main->suit1[array_search($name, $this->main->suit1)]);
-                            }elseif(in_array($name, $this->main->suit2)) {
-                                unset($this->main->suit2[array_search($name, $this->main->suit2)]);
+                            if (in_array($name, $this->plugin->suit1)) {
+                                unset($this->plugin->suit1[array_search($name, $this->plugin->suit1)]);
+                            } elseif (in_array($name, $this->plugin->suit2)) {
+                                unset($this->plugin->suit2[array_search($name, $this->plugin->suit2)]);
                             }
 
                         }
@@ -107,12 +107,12 @@ class SuitForm {
                     ];
                     $player->getArmorInventory()->setContents($armors);
                     $name = $player->getName();
-                    if(in_array($name, $this->main->suit1)) {
-                        unset($this->main->suit1[array_search($name, $this->main->suit1)]);
-                    }elseif(in_array($name, $this->main->suit2)) {
-                        unset($this->main->suit2[array_search($name, $this->main->suit2)]);
+                    if (in_array($name, $this->plugin->suit1)) {
+                        unset($this->plugin->suit1[array_search($name, $this->plugin->suit1)]);
+                    } elseif (in_array($name, $this->plugin->suit2)) {
+                        unset($this->plugin->suit2[array_search($name, $this->plugin->suit2)]);
                     }
-				break;
+                    break;
 				
 				case 3:
                     $this->getMain()->getForms()->menuForm($player);   
@@ -123,14 +123,15 @@ class SuitForm {
         $form->setContent("Pick One");
         $form->addButton("Youtube Suit");
         $form->addButton("Frog Suit");
-		$form->addButton("Clear");
-		$form->addButton("§l§8<< Back");
+        $form->addButton("Clear");
+        $form->addButton("§l§8<< Back");
         $form->sendToPlayer($player);
         return $form;
     }
 
-    function getMain() : Main {
-        return $this->main;
+    function getMain(): CosmeticMenu
+    {
+        return $this->plugin;
     }
 
 

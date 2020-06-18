@@ -2,28 +2,28 @@
 
 namespace NinjaKnights\CosmeticMenu\forms;
     
-use NinjaKnights\CosmeticMenu\Main;
 use jojoe77777\FormAPI\SimpleForm;
-
+use NinjaKnights\CosmeticMenu\CosmeticMenu;
 use pocketmine\Player;
-use pocketmine\Server;
-use pocketmine\item\Item;
-    
-class MainForm {
-    
-    private $main;
 
-    public function __construct(Main $main){
-        $this->main = $main;
+class MainForm
+{
+
+    private $plugin;
+
+    public function __construct(CosmeticMenu $plugin)
+    {
+        $this->plugin = $plugin;
     }
-    
-    public function menuForm($player) {
+
+    public function menuForm($player)
+    {
         $form = new SimpleForm(function (Player $player, $data) {
-        $result = $data;
-            if($result === null) {
+            $result = $data;
+            if ($result === null) {
                 return true;
             }
-            switch($result) {
+            switch ($result) {
                 case 0:
                     if($player->hasPermission("cosmetic.gadgets")){
                         $this->getMain()->getGadgets()->openGadgets($player);
@@ -55,7 +55,7 @@ class MainForm {
                 break;
             }
         });
-           
+
         $form->setTitle("§l§3Cosmetic§eMenu");
         $form->addButton("§l§8Gadgets\n§r§7Click to Open");
         $form->addButton("§l§8Particles\n§r§7Click to Open");
@@ -65,8 +65,9 @@ class MainForm {
         $form->sendToPlayer($player);
     }
 
-    function getMain() : Main {
-        return $this->main;
+    function getMain(): CosmeticMenu
+    {
+        return $this->plugin;
     }
 
 }
