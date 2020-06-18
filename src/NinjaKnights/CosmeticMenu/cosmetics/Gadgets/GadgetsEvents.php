@@ -34,7 +34,7 @@ class GadgetsEvents implements Listener {
         $block = $player->getLevel()->getBlock($player->floor()->subtract(0, 1));
 
         //Lightning Stick
-        if($iname == "Lightning Stick") {
+        if($iname == CosmeticMenu::LIGHTNINGSTICKITEM) {
             if($player->hasPermission("cosmetic.gadgets.lightningstick")) {
                 if(!isset($this->plugin->lsCooldown[$player->getName()])) {
                     $block = $event->getBlock();
@@ -58,7 +58,7 @@ class GadgetsEvents implements Listener {
             }
         }
         //Leaper
-        if($iname == "Leaper") {
+        if($iname == CosmeticMenu::LEAPER) {
             if($player->hasPermission("cosmetic.gadgets.leaper")) {
                 if(!isset($this->plugin->lCooldown[$player->getName()])) {
 

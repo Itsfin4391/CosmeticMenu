@@ -63,8 +63,8 @@ class EventListener implements Listener {
     }
 
     public function onQuit(PlayerQuitEvent $event) {
+        $player = $event->getPlayer();
         if($this->plugin->getCosmeticItemSupport()) {
-            $player = $event->getPlayer();
             $item = Item::get($this->plugin->getCosmeticItemType());
             $item->getCustomName($this->plugin->getCosmeticName());
             $item->getLore($this->plugin->getCosmeticDes());
@@ -127,7 +127,7 @@ class EventListener implements Listener {
             foreach($transaction->getActions() as $action) {
                 $item = $action->getSourceItem();
                 $source = $transaction->getSource();
-                if($source instanceof Player && $this->cosmeticItem($item)) {
+                if($source instanceof Player && $this->isCosmeticItem($item)) {
                     if($action instanceof SlotChangeAction || $action instanceof DropItemAction) {
                         $event->setCancelled();
                     }
@@ -136,13 +136,13 @@ class EventListener implements Listener {
         }
     }
 
-    private function cosmeticItem(Item $item): bool {
+    private function isCosmeticItem(Item $item): bool {
         if($this->plugin->getCosmeticItemSupport()) {
             if($item->getCustomName() == $this->plugin->getCosmeticName() && $item->getId() == $this->plugin->getCosmeticItemType() && $item->getLore() == $this->plugin->getCosmeticDes()) {
                 return true;
             }
-            $in = $item->getCustomName();
-            if($in == "TNT-Launcher" || $in == "Lightning Stick" || $in == "Leaper" || $in == "§l§8<< Back") {
+            $itemName = $item->getCustomName();
+            if($itemName == CosmeticMenu::TNTLAUNCHERITEM || $itemName == CosmeticMenu::LIGHTNINGSTICKITEM || $itemName == CosmeticMenu::LEAPER || $itemName == CosmeticMenu::BACKITEM) {
                 return true;
             }
         }
@@ -163,7 +163,16 @@ class EventListener implements Listener {
         }
 
         //Back
-        if($iname == "§l§4<< Back") {
+        if($iname == CosmeticMenu::BACKITEM) {
+            if(!$this->plugin->getCosmeticItemSupport()) {
+                foreach($player->getInventory()->getContents() as $item) {
+                    if($this->isCosmeticItem($item)) {
+                        $player->sendMessage("removing cosmetic items");
+                        $player->getInventory()->remove($item);
+                    }
+                }
+                return true;
+            }
 
             $slot = $this->plugin->getConfig()->getNested("Cosmetic.Slot");
             $item = Item::get(0, 0, 1);

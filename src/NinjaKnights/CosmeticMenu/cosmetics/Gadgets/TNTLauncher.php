@@ -33,7 +33,7 @@ class TNTLauncher implements Listener {
         $block = $player->getLevel()->getBlock($player->floor()->subtract(0, 1));
 
         //TNT-Launcher
-        if($iname == "TNT-Launcher") {
+        if($iname == CosmeticMenu::TNTLAUNCHERITEM) {
             if($player->hasPermission("cosmetic.gadgets.tntlauncher")) {
                 if(!isset($this->plugin->tntCooldown[$player->getName()])) {
                     $nbt = new CompoundTag("", [

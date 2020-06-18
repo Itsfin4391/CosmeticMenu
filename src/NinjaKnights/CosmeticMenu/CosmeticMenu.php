@@ -33,6 +33,13 @@ use pocketmine\utils\Config;
 
 class CosmeticMenu extends PluginBase implements Listener {
 
+    //$in == "TNT-Launcher" || $in == "Lightning Stick" || $in == "Leaper" || $in == "§l§8<< Back"
+
+    public const TNTLAUNCHERITEM = "TNT-Launcher";
+    public const LIGHTNINGSTICKITEM = "Lightning Stick";
+    public const LEAPER = "Leaper";
+    public const BACKITEM = "§l§8<< Back";
+
     public $world;
     public $tntCooldown = [];
     public $tntCooldownTime = [];
