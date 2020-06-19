@@ -1,8 +1,6 @@
 # CosmeticMenu
 Fun and Easy-to-Use Cosmetic plugin with gadgets, particles, trails, suits and morphs. A Easy config and tons of permissions.
 
-Our Discord: https://discord.gg/PsMYb6Q
-
 ## Plugins Required
  - MorphX
  - PerWorldInventory (Optional) 
